@@ -1,1 +1,1 @@
-# Bethesda-Apostolic-Churc-Website
+# Bethesda-Apostolic-Church-Website
