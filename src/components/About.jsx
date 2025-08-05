@@ -48,7 +48,7 @@ export default function About() {
                     />
                   </motion.div>
                 </AnimatePresence>
-                  
+                
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                   {images.map((_, index) => (
                     <button
@@ -60,7 +60,6 @@ export default function About() {
                   ))}
                 </div>
               </div>
-              {/* Adjusted position to match mobile view's placement */}
               <motion.div
                 className="absolute -bottom-6 right-6 bg-blue-600 text-white p-4 sm:p-5 md:p-6 rounded-lg shadow-lg z-10"
                 whileHover={{ scale: 1.1 }}
@@ -185,7 +184,7 @@ export default function About() {
                 Our Beliefs
               </Link>
               <Link
-                href="#priest"
+                href="/ministries/leadership"
                 className="btn bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition duration-300 ease-in-out hover:scale-105"
               >
                 Meet Our Priest

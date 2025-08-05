@@ -4,8 +4,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { FaUserGraduate, FaHandsHelping, FaPaintBrush, FaWhatsapp, FaFacebook } from 'react-icons/fa';
+import { FaUserGraduate, FaHandsHelping, FaPaintBrush, FaWhatsapp, FaFacebook, FaArrowLeft } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function SundaySchoolPage() {
   const ministryDescription = `
@@ -65,7 +66,7 @@ export default function SundaySchoolPage() {
           className="z-0"
         />
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
-
+        
         <motion.div
           className="relative z-20"
           initial={{ opacity: 0, y: 20 }}
@@ -82,6 +83,19 @@ export default function SundaySchoolPage() {
       </header>
 
       <main className="container mx-auto px-4 py-16">
+        {/* Consistent Back to Home button from events page */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <FaArrowLeft className="mr-2" />
+            Back to Home
+          </Link>
+        </motion.div>
+
         <section className="bg-white p-8 rounded-xl shadow-lg mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

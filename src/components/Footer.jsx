@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { FaFacebook, FaWhatsapp, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChurch } from 'react-icons/fa';
+import { FaFacebook, FaWhatsapp, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   
-  // Ministries link removed from quickLinks
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About Us', href: '#about' },
@@ -16,6 +15,7 @@ export default function Footer() {
   ];
   
   const ministries = [
+    { name: 'Hero of Faith', href: '/ministries/hero-of-faith' }, // New link added here
     { name: 'Sunday School', href: '/ministries/sunday-school' },
     { name: 'Ruwadzano', href: '/ministries/ruwadzano' },
     { name: 'BMCU', href: '/ministries/bmcu' },
