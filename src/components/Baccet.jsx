@@ -1,10 +1,13 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import Link from 'next/link';
+import BaccetDonateModal from './BaccetDonateModal';
 
 export default function Baccet() {
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+
   const stats = [
     { value: '100+', label: 'Students Supported Annually' },
     { value: 'ZWL 1.5M+', label: 'Invested in Education' },
@@ -17,7 +20,7 @@ export default function Baccet() {
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left side - Content */}
-          <motion.div 
+          <motion.div
             className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -31,13 +34,13 @@ export default function Baccet() {
               <span className="text-blue-600">Bethesda Apostolic Church</span> Education Trust
             </h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              The Bethesda Apostolic Church Christian Education Trust (BACCET) is committed to providing 
-              educational opportunities for children from less privileged families within our community. 
+              The Bethesda Apostolic Church Christian Education Trust (BACCET) is committed to providing
+              educational opportunities for children from less privileged families within our community.
               Each year, we support between 100-150 students with school fees, uniforms, and learning materials.
             </p>
             <p className="text-gray-600 mb-8 leading-relaxed">
-              Our mission is to break the cycle of poverty through education, empowering the next generation 
-              with knowledge and skills for a brighter future. We believe that every child deserves access to 
+              Our mission is to break the cycle of poverty through education, empowering the next generation
+              with knowledge and skills for a brighter future. We believe that every child deserves access to
               quality education, regardless of their family's financial situation.
             </p>
             
@@ -71,24 +74,31 @@ export default function Baccet() {
               ))}
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a 
-                href="#apply" 
+            {/* Button group for desktop view */}
+            <div className="hidden lg:flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a
+                href="#apply"
                 className="btn bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto text-center"
               >
                 Apply for Scholarship
               </a>
-              <a 
-                href="#donate" 
+              <button
+                onClick={() => setIsDonateModalOpen(true)}
                 className="btn bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 w-full sm:w-auto text-center"
               >
                 Donate Now
-              </a>
+              </button>
+              <Link
+                href="/donations"
+                className="btn bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 w-full sm:w-auto text-center"
+              >
+                View Past Donations
+              </Link>
             </div>
           </motion.div>
 
           {/* Right side - Stats and Image */}
-          <motion.div 
+          <motion.div
             className="lg:w-1/2"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -118,17 +128,41 @@ export default function Baccet() {
                 <p className="text-gray-600 mb-4">
                   Join us in making a difference in the lives of underprivileged students.
                 </p>
-                <a 
-                  href="#contact" 
+                <a
+                  href="#contact"
                   className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Contact Us for More Info
                 </a>
               </div>
+              
+              {/* Button group for mobile view */}
+              <div className="flex lg:hidden flex-col sm:flex-row gap-3 sm:gap-4 mt-6">
+                <a
+                  href="#apply"
+                  className="btn bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto text-center"
+                >
+                  Apply for Scholarship
+                </a>
+                <button
+                  onClick={() => setIsDonateModalOpen(true)}
+                  className="btn bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 w-full sm:w-auto text-center"
+                >
+                  Donate Now
+                </button>
+                <Link
+                  href="/donations"
+                  className="btn bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 w-full sm:w-auto text-center"
+                >
+                  View Donations
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>
       </div>
+      
+      {isDonateModalOpen && <BaccetDonateModal onClose={() => setIsDonateModalOpen(false)} />}
     </section>
   );
 }

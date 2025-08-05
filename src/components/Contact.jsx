@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaChurch, FaClock, FaFacebook, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaChurch, FaClock, FaFacebook, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 
 export default function Contact() {
   return (
@@ -82,16 +82,13 @@ export default function Contact() {
               <div className="pt-4 mt-4 border-t border-gray-100">
                 <h4 className="font-semibold text-gray-900 mb-3">Follow Us</h4>
                 <div className="flex space-x-3">
-                  <a href="#" className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                  <a href="https://www.facebook.com/share/g/1MUa4mMqrp/" className="w-10 h-10 bg-[#3b5998] text-white rounded-full flex items-center justify-center hover:bg-[#2d4373] transition-colors">
                     <FaFacebook />
                   </a>
-                  <a href="#" className="w-10 h-10 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
-                    <FaTwitter />
+                  <a href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T" className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
+                    <FaWhatsapp />
                   </a>
-                  <a href="#" className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
-                    <FaInstagram />
-                  </a>
-                  <a href="#" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                  <a href="https://www.youtube.com/@bethesdaapostolicchurch4090" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
                     <FaYoutube />
                   </a>
                 </div>
@@ -99,7 +96,7 @@ export default function Contact() {
             </div>
           </motion.div>
           
-          {/* Service Times */}
+          {/* Service Times */} 
           <motion.div 
             className="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 rounded-xl shadow-md"
             initial={{ opacity: 0, y: 30 }}
@@ -115,7 +112,7 @@ export default function Contact() {
                   <FaChurch className="text-xl" />
                 </div>
                 <div>
-                  <h4 className="font-semibold">Sunday Survice</h4>
+                  <h4 className="font-semibold">Sunday Service</h4>
                   <p className="text-blue-100">11:00 AM - 13:00 PM</p>
                 </div>
               </div>

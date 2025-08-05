@@ -1,27 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChurch } from 'react-icons/fa';
+import { FaFacebook, FaWhatsapp, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChurch } from 'react-icons/fa';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   
+  // Ministries link removed from quickLinks
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About Us', href: '#about' },
     { name: 'Sermons', href: '#sermons' },
     { name: 'Events', href: '#events' },
-    { name: 'Ministries', href: '#ministries' },
     { name: 'Contact', href: '#contact' },
   ];
   
   const ministries = [
-    { name: 'Children\'s Ministry', href: '#' },
-    { name: 'Youth Ministry', href: '#' },
-    { name: 'Men\'s Fellowship', href: '#' },
-    { name: 'Women\'s Ministry', href: '#' },
-    { name: 'Worship Team', href: '#' },
-    { name: 'Outreach', href: '#' },
+    { name: 'Sunday School', href: '/ministries/sunday-school' },
+    { name: 'Ruwadzano', href: '/ministries/ruwadzano' },
+    { name: 'BMCU', href: '/ministries/bmcu' },
+    { name: 'Church', href: '/ministries/church' },
+    { name: 'Leadership', href: '/ministries/leadership' },
   ];
   
   const contactInfo = [
@@ -31,10 +30,9 @@ export default function Footer() {
   ];
   
   const socialLinks = [
-    { icon: <FaFacebook />, href: '#', label: 'Facebook' },
-    { icon: <FaTwitter />, href: '#', label: 'Twitter' },
-    { icon: <FaInstagram />, href: '#', label: 'Instagram' },
-    { icon: <FaYoutube />, href: '#', label: 'YouTube' },
+    { icon: <FaFacebook />, href: 'https://www.facebook.com/share/g/1MUa4mMqrp/', label: 'Facebook' },
+    { icon: <FaWhatsapp />, href: 'https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T', label: 'WhatsApp' },
+    { icon: <FaYoutube />, href: 'https://www.youtube.com/', label: 'YouTube' },
   ];
 
   return (
@@ -55,16 +53,27 @@ export default function Footer() {
               A vibrant community of believers dedicated to spreading the love of Christ through worship, teaching, and service.
             </p>
             <div className="flex space-x-4 mt-6">
-              {socialLinks.map((social, index) => (
-                <a 
-                  key={index}
-                  href={social.href} 
-                  className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center text-white transition-colors"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
+              <a 
+                href={socialLinks[0].href} 
+                className="w-10 h-10 bg-[#3b5998] hover:bg-[#2d4373] rounded-full flex items-center justify-center text-white transition-colors"
+                aria-label={socialLinks[0].label}
+              >
+                {socialLinks[0].icon}
+              </a>
+              <a 
+                href={socialLinks[1].href} 
+                className="w-10 h-10 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center text-white transition-colors"
+                aria-label={socialLinks[1].label}
+              >
+                {socialLinks[1].icon}
+              </a>
+              <a 
+                href={socialLinks[2].href} 
+                className="w-10 h-10 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center text-white transition-colors"
+                aria-label={socialLinks[2].label}
+              >
+                {socialLinks[2].icon}
+              </a>
             </div>
           </div>
           
@@ -108,9 +117,9 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-gray-800">Contact Us</h3>
             <ul className="space-y-3">
               {contactInfo.map((info, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-blue-500 mt-1 mr-3">{info.icon}</span>
-                  <span className="text-gray-400">{info.text}</span>
+                <li key={index} className="flex items-start group hover:text-white transition-colors">
+                  <span className="text-blue-500 mt-1 mr-3 transition-colors group-hover:text-blue-400">{info.icon}</span>
+                  <span className="text-gray-400 transition-colors group-hover:text-white">{info.text}</span>
                 </li>
               ))}
             </ul>

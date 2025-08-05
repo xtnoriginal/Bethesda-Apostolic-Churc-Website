@@ -12,12 +12,15 @@ export const metadata: Metadata = {
   title: "Bethesda Apostolic Church",
   description: "Welcome to Bethesda Apostolic Church - A place of worship, fellowship, and spiritual growth.",
   keywords: ["church", "apostolic", "bethesda", "worship", "fellowship", "christian"],
-  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     icon: '/favicon.ico',
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+}
 export default function RootLayout({
   children,
 }: {

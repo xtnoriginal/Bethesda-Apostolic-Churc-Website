@@ -30,18 +30,51 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Link 
                 href="#about" 
-                className="btn btn-primary inline-flex items-center justify-center"
+                className="btn btn-primary inline-flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700"
               >
                 Learn More About Us
               </Link>
               <Link 
                 href="#sermons" 
-                className="btn btn-secondary inline-flex items-center justify-center"
+                // *** CORRECTED HOVER EFFECT FOR RED BUTTON ***
+                className="btn btn-secondary inline-flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 hover:bg-red-700"
               >
                 Watch Sermons
               </Link>
             </div>
             
+            {/* The image component is now here for mobile view */}
+            <motion.div 
+              className="w-full lg:w-1/2 relative mt-8 lg:mt-0 lg:pl-4 lg:hidden block group"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full transition duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-3xl">
+                <div className="aspect-w-16 aspect-h-9 w-full">
+                  <Image
+                    src="/2.jpg"
+                    alt="Church Service"
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4 sm:p-6 md:p-8">
+                  <div className="text-white">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-white">
+                      Join Us This Sunday
+                    </h3>
+                    <p className="text-sm sm:text-base text-white">
+                      Experience the presence of God with us
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
             <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
                 { label: 'Sunday service', value: 'Sundays 11:30 AM - 01:00 PM' },
@@ -61,17 +94,17 @@ export default function Hero() {
             </div>
           </motion.div>
           
-          {/* Right side - Image */}
+          {/* Right side - Image (desktop only) */}
           <motion.div 
-            className="w-full lg:w-1/2 relative mt-8 lg:mt-0 lg:pl-4"
+            className="w-full lg:w-1/2 relative mt-8 lg:mt-0 lg:pl-4 hidden lg:block group"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full transition duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-3xl">
               <div className="aspect-w-16 aspect-h-9 w-full">
                 <Image
-                  src="/1.jpg"
+                  src="/2.jpg"
                   alt="Church Service"
                   width={800}
                   height={600}
@@ -82,8 +115,12 @@ export default function Hero() {
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4 sm:p-6 md:p-8">
                 <div className="text-white">
-                  <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Join Us This Sunday</h3>
-                  <p className="text-blue-200 text-sm sm:text-base">Experience the presence of God with us</p>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-white">
+                    Join Us This Sunday
+                  </h3>
+                  <p className="text-sm sm:text-base text-white">
+                    Experience the presence of God with us
+                  </p>
                 </div>
               </div>
             </div>
