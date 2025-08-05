@@ -4,11 +4,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCalendarAlt, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
-import EventModal from '../../components/EventModal'; // Adjust import path if needed
+import EventModal from '../../components/EventModal'; 
 import { useState } from 'react';
 
-// For simplicity, let's copy the events data here.
-// In a real-world app, you would move this to a shared file like `lib/events.js`
+
 const events = [
   {
     id: 1,

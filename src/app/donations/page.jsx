@@ -1,4 +1,4 @@
-// app/donations/page.jsx
+
 'use client';
 
 import { motion } from 'framer-motion';
@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
-// Placeholder data for past donations images
+
 const pastDonations = [
   { id: 1, image: '/images/34.jpg', date: '**** 2025' },
   { id: 2, image: '/images/35.jpg', date: '**** 2025' },

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaTimes, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
-// The duration for each image in the carousel in milliseconds
+
 const CAROUSEL_INTERVAL = 7000;
 
 export default function EventModal({ event, onClose }) {
@@ -14,12 +14,12 @@ export default function EventModal({ event, onClose }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    // Start the automatic image carousel
+  
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % event.images.length);
     }, CAROUSEL_INTERVAL);
 
-    // Clean up the interval when the modal closes
+  
     return () => clearInterval(interval);
   }, [event.images.length]);
 

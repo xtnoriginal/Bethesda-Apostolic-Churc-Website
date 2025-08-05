@@ -36,7 +36,6 @@ export default function Hero() {
               </Link>
               <Link 
                 href="#sermons" 
-                // *** CORRECTED HOVER EFFECT FOR RED BUTTON ***
                 className="btn btn-secondary inline-flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 hover:bg-red-700"
               >
                 Watch Sermons

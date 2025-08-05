@@ -107,7 +107,7 @@ export default function HeroOfFaithPage() {
         >
           <motion.div variants={itemVariants} className="relative h-64 rounded-xl overflow-hidden shadow-lg">
             <Image 
-              src="/images/202.jpg"
+              src="/images/155.jpg"
               alt="Arch Bishop in 1952"
               fill
               style={{ objectFit: 'cover' }}

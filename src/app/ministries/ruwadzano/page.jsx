@@ -10,7 +10,7 @@ export default function RuwadzanoPage() {
     The Ruwadzano Ministry is a fellowship of women dedicated to serving God and the church community with a spirit of excellence. Our mission is to empower, encourage, and uplift women through prayer, fellowship, and service. We strive to create a nurturing environment where women can grow in their faith, share their experiences, and support one another through life's challenges. Through our various programs and conferences, we focus on strengthening the family unit, promoting spiritual maturity, and reaching out to the broader community with the love of Christ.
   `;
 
-  // Ruwadzano-specific images for the gallery
+
   const galleryImages = [
     { src: '/images/11.jpg', alt: 'Ruwadzano Conference Session' },
     { src: '/images/6.jpg', alt: 'Ruwadzano Event' },

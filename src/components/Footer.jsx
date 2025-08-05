@@ -15,7 +15,7 @@ export default function Footer() {
   ];
   
   const ministries = [
-    { name: 'Hero of Faith', href: '/ministries/hero-of-faith' }, // New link added here
+    { name: 'Hero of Faith', href: '/ministries/hero-of-faith' },
     { name: 'Sunday School', href: '/ministries/sunday-school' },
     { name: 'Ruwadzano', href: '/ministries/ruwadzano' },
     { name: 'BMCU', href: '/ministries/bmcu' },

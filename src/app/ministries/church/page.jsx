@@ -1,4 +1,3 @@
-// /app/church-archive/page.jsx
 
 'use client';
 
@@ -12,7 +11,7 @@ export default function ChurchArchivePage() {
     Welcome to our church archive, a visual journey through the history and vibrant life of our community. This collection of photos captures moments from our Sunday services, ministry events, conferences, and fellowships. It tells the story of our growth, our shared faith, and the joy we find in Christ. We are more than just a church; we are a family, and this archive is a testament to the bonds we've formed and the work God has done in our midst.
   `;
 
-  // A comprehensive list of images for the church archive gallery
+ 
   const galleryImages = [
     { src: '/images/13.jpg', alt: 'Youth Conference' },
     { src: '/images/12.jpg', alt: 'Matumba Conference' },

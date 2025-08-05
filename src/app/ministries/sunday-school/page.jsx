@@ -1,4 +1,4 @@
-// /app/ministries/sunday-school/page.jsx
+
 
 'use client';
 
@@ -49,9 +49,9 @@ export default function SundaySchoolPage() {
       setCurrentImageIndex((prevIndex) => 
         (prevIndex + 1) % slideshowImages.length
       );
-    }, 4000); // Change image every 4 seconds
+    }, 4000); 
 
-    return () => clearInterval(timer); // Cleanup timer on component unmount
+    return () => clearInterval(timer); 
   }, [slideshowImages.length]);
 
   return (
