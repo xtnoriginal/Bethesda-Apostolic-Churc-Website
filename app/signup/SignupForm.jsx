@@ -15,7 +15,7 @@ export default function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -29,7 +29,7 @@ export default function SignupForm() {
     }
 
     try {
-      signup({ name, email, password });
+      await signup({ name, email, password });
       router.push('/courses');
     } catch (err) {
       setError(err.message);

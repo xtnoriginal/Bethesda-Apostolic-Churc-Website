@@ -22,11 +22,11 @@ function LoginFields() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      login({ email, password });
+      await login({ email, password });
       router.push(searchParams.get('redirect') || '/');
     } catch (err) {
       setError(err.message);

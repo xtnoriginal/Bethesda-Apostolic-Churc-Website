@@ -1,91 +1,83 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const AuthContext = createContext(null);
 
-const USERS_KEY = 'bac_auth_users';
-const SESSION_KEY = 'bac_auth_session';
-const progressKey = (email) => `bac_progress:${email}`;
-
-function readJSON(key, fallback) {
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function writeJSON(key, value) {
-  window.localStorage.setItem(key, JSON.stringify(value));
-}
-
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: session, status, update } = useSession();
+  const [progress, setProgress] = useState({});
+
+  const user = session?.user ? { name: session.user.name, email: session.user.email } : null;
+  const isLoading = status === 'loading';
 
   useEffect(() => {
-    const session = readJSON(SESSION_KEY, null);
-    setUser(session);
-    setIsLoading(false);
-  }, []);
-
-  const signup = ({ name, email, password }) => {
-    const users = readJSON(USERS_KEY, []);
-    if (users.some((u) => u.email === email)) {
-      throw new Error('An account with this email already exists.');
+    if (status === 'authenticated') {
+      fetch('/api/progress')
+        .then((res) => (res.ok ? res.json() : { progress: {} }))
+        .then((data) => setProgress(data.progress || {}))
+        .catch(() => setProgress({}));
+    } else if (status === 'unauthenticated') {
+      setProgress({});
     }
-    const newUser = { name, email, password };
-    writeJSON(USERS_KEY, [...users, newUser]);
-    const session = { name, email };
-    writeJSON(SESSION_KEY, session);
-    setUser(session);
-    return session;
+  }, [status]);
+
+  const signup = async ({ name, email, password }) => {
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Something went wrong signing up.');
+    }
+    const result = await signIn('credentials', { redirect: false, email, password });
+    if (result?.error) {
+      throw new Error('Account created, but automatic login failed. Please log in.');
+    }
   };
 
-  const login = ({ email, password }) => {
-    const users = readJSON(USERS_KEY, []);
-    const match = users.find((u) => u.email === email && u.password === password);
-    if (!match) {
+  const login = async ({ email, password }) => {
+    const result = await signIn('credentials', { redirect: false, email, password });
+    if (result?.error) {
       throw new Error('Invalid email or password.');
     }
-    const session = { name: match.name, email: match.email };
-    writeJSON(SESSION_KEY, session);
-    setUser(session);
-    return session;
   };
 
   const logout = () => {
-    window.localStorage.removeItem(SESSION_KEY);
-    setUser(null);
+    signOut({ redirect: false });
   };
 
-  const updateProfile = ({ name }) => {
-    if (!user) return;
-    const users = readJSON(USERS_KEY, []);
-    const nextUsers = users.map((u) => (u.email === user.email ? { ...u, name } : u));
-    writeJSON(USERS_KEY, nextUsers);
-    const session = { ...user, name };
-    writeJSON(SESSION_KEY, session);
-    setUser(session);
-    return session;
+  const updateProfile = async ({ name }) => {
+    const res = await fetch('/api/profile', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Could not update profile.');
+    }
+    await update({ name });
   };
 
   const markLessonComplete = (courseSlug, lessonId) => {
-    if (!user) return;
-    const progress = readJSON(progressKey(user.email), {});
-    const completed = new Set(progress[courseSlug] || []);
-    completed.add(lessonId);
-    const next = { ...progress, [courseSlug]: Array.from(completed) };
-    writeJSON(progressKey(user.email), next);
+    setProgress((prev) => {
+      const existing = prev[courseSlug] || [];
+      if (existing.includes(lessonId)) return prev;
+      return { ...prev, [courseSlug]: [...existing, lessonId] };
+    });
+
+    fetch('/api/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ courseSlug, lessonId }),
+    }).catch(() => {});
   };
 
-  const getProgress = (courseSlug) => {
-    if (!user) return [];
-    const progress = readJSON(progressKey(user.email), {});
-    return progress[courseSlug] || [];
-  };
+  const getProgress = (courseSlug) => progress[courseSlug] || [];
 
   return (
     <AuthContext.Provider

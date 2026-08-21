@@ -12,6 +12,7 @@ export default function ProfilePage() {
   const { user, isLoading, logout, updateProfile } = useAuth();
   const [name, setName] = useState('');
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -27,11 +28,16 @@ export default function ProfilePage() {
     return <div className="section bg-white min-h-screen" />;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateProfile({ name });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setError('');
+    try {
+      await updateProfile({ name });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -50,6 +56,12 @@ export default function ProfilePage() {
         >
           <h1 className="text-3xl font-bold mb-2">Your Profile</h1>
           <p className="text-gray-600 mb-8">Manage your account details.</p>
+
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
