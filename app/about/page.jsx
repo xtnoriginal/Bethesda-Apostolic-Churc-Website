@@ -1,4 +1,5 @@
 import About from '@/components/About.jsx';
+import WingsSection from '@/components/WingsSection.jsx';
 
 export const metadata = {
   title: 'About Us | Bethesda Apostolic Church',
@@ -9,6 +10,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       <About />
+      <WingsSection />
     </div>
   );
 }

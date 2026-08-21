@@ -7,20 +7,27 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaBars, FaChevronDown, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
+import { ministries } from '@/data/ministries';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [isMinistriesMenuOpen, setIsMinistriesMenuOpen] = useState(false);
+  const [isMobileMinistriesOpen, setIsMobileMinistriesOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const observer = useRef(null);
   const accountMenuRef = useRef(null);
+  const ministriesMenuRef = useRef(null);
   const { user, isLoading, logout } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (accountMenuRef.current && !accountMenuRef.current.contains(e.target)) {
         setIsAccountMenuOpen(false);
+      }
+      if (ministriesMenuRef.current && !ministriesMenuRef.current.contains(e.target)) {
+        setIsMinistriesMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -64,6 +71,7 @@ export default function Header() {
     { name: 'About', href: '/about' },
     { name: 'Sermons', href: '#sermons' },
     { name: 'Events', href: '/events' },
+    { name: 'Ministries', dropdown: true },
     { name: 'Our Founder', href: '/founder' },
     { name: 'Courses', href: '/courses' },
     { name: 'Contact', href: '/contact' },
@@ -98,6 +106,44 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
+            if (link.dropdown) {
+              return (
+                <div key={link.name} className="relative" ref={ministriesMenuRef}>
+                  <button
+                    onClick={() => setIsMinistriesMenuOpen((open) => !open)}
+                    className="relative px-4 py-2 text-sm font-medium flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                  >
+                    {link.name}
+                    <FaChevronDown
+                      className={`text-xs transition-transform duration-200 ${isMinistriesMenuOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {isMinistriesMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute left-0 mt-3 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50"
+                      >
+                        {ministries.map((ministry) => (
+                          <Link
+                            key={ministry.slug}
+                            href={ministry.href || `/ministries/${ministry.slug}`}
+                            onClick={() => setIsMinistriesMenuOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          >
+                            {ministry.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
             const isActive = activeSection === link.href.replace('#', '');
             return (
               <Link
@@ -210,6 +256,39 @@ export default function Header() {
           >
             <div className="px-4 pt-2 pb-4 space-y-1">
               {navLinks.map((link) => {
+                if (link.dropdown) {
+                  return (
+                    <div key={link.name}>
+                      <button
+                        onClick={() => setIsMobileMinistriesOpen((open) => !open)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
+                      >
+                        {link.name}
+                        <FaChevronDown
+                          className={`text-xs transition-transform duration-200 ${isMobileMinistriesOpen ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+                      {isMobileMinistriesOpen && (
+                        <div className="pl-6 space-y-1">
+                          {ministries.map((ministry) => (
+                            <Link
+                              key={ministry.slug}
+                              href={ministry.href || `/ministries/${ministry.slug}`}
+                              onClick={() => {
+                                setIsMenuOpen(false);
+                                setIsMobileMinistriesOpen(false);
+                              }}
+                              className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100"
+                            >
+                              {ministry.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
                 const isActive = activeSection === link.href.replace('#', '');
                 return (
                   <Link
