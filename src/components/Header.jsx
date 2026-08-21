@@ -3,36 +3,38 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FaBars, FaChevronDown, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
-
-// You can keep sectionColors if you use it elsewhere,
-// but for the header background, we will explicitly set it.
-const sectionColors = {
-  home: 'bg-white/90 hover:bg-white',
-  about: 'bg-blue-50/90 hover:bg-blue-50',
-  sermons: 'bg-white/90 hover:bg-white',
-  events: 'bg-gray-50/90 hover:bg-gray-50',
-  neniwo: 'bg-blue-600/90 hover:bg-blue-600 text-white',
-  baccet: 'bg-blue-800/90 hover:bg-blue-800 text-white',
-  contact: 'bg-blue-50/90 hover:bg-blue-50',
-};
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home'); // Keep this for active link highlighting
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const observer = useRef(null);
+  const accountMenuRef = useRef(null);
+  const { user, isLoading, logout } = useAuth();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (accountMenuRef.current && !accountMenuRef.current.contains(e.target)) {
+        setIsAccountMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
-    
-    // Set up intersection observer for section detection (keep this for active nav link styling)
+
     const sections = document.querySelectorAll('section[id]');
-    
+
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -40,7 +42,7 @@ export default function Header() {
     };
 
     const handleIntersection = (entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
         }
@@ -48,7 +50,7 @@ export default function Header() {
     };
 
     observer.current = new IntersectionObserver(handleIntersection, observerOptions);
-    sections.forEach(section => observer.current.observe(section));
+    sections.forEach((section) => observer.current.observe(section));
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -59,98 +61,212 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
+    { name: 'About', href: '/about' },
     { name: 'Sermons', href: '#sermons' },
-    { name: 'Events', href: '#events' },
-    { name: 'Neniwo', href: '#neniwo' },
-    { name: 'Scholarship', href: '#baccet' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Events', href: '/events' },
+    { name: 'Our Founder', href: '/founder' },
+    { name: 'Courses', href: '/courses' },
+    { name: 'Contact', href: '/contact' },
   ];
 
-  // MODIFIED: Simplified getHeaderClass to always use white background and dark text,
-  // while still allowing the padding to change on scroll.
   const getHeaderClass = () => {
-    const baseClass = 'fixed w-full z-50 transition-all duration-300 bg-white shadow-md'; // ALWAYS bg-white and shadow
-    const scrolledClass = isScrolled ? 'py-2' : 'py-4'; // Still changes padding on scroll
-    
-    // Removed sectionColors[activeSection] from here.
-    // The text color will be handled directly in the link components below.
-    return `${baseClass} ${scrolledClass} border-b-0`;
+    const baseClass = 'fixed w-full z-50 transition-all duration-300';
+    const scrolledClass = isScrolled
+      ? 'py-2 bg-white/90 backdrop-blur-md shadow-md'
+      : 'py-4 bg-white/60 backdrop-blur-sm';
+    return `${baseClass} ${scrolledClass}`;
   };
 
   return (
-    // Applied base header classes directly to the <header> tag
     <header className={getHeaderClass()}>
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="#home" className="flex items-center space-x-2">
-          <div className="relative w-10 h-10">
-            <Image 
-              src="/logo.png" 
-              alt="Bethesda Apostolic Church Logo" 
-              fill 
+        <Link href="/" className="flex items-center space-x-2">
+          <div className="relative w-10 h-10 flex-shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Bethesda Apostolic Church Logo"
+              fill
               className="object-contain"
               priority
             />
           </div>
-          {/* Ensure these texts are always dark when header is white */}
-          <span className="text-2xl font-bold text-gray-900 ml-2">
+          <span className="text-xl font-bold text-gray-900 ml-2 whitespace-nowrap">
             Bethesda <span className="text-blue-600">Apostolic Church</span>
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`font-medium transition-colors duration-200 ${
-                activeSection === link.href.slice(1) 
-                  ? 'text-blue-600 font-semibold' 
-                  : 'text-gray-700 hover:text-blue-600' // Ensure hover is visible
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile menu button */}
-        <button 
-          className="md:hidden text-gray-700 focus:outline-none" // Ensure button color is always dark
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            <FaTimes className="w-6 h-6" />
-          ) : (
-            <FaBars className="w-6 h-6" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        // Ensure mobile menu also has a white background
-        <div className="md:hidden bg-white shadow-lg">
-          <div className="px-4 pt-2 pb-4 space-y-2">
-            {navLinks.map((link) => (
+        <nav className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.replace('#', '');
+            return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`block px-3 py-2 rounded-md font-medium ${
-                  activeSection === link.href.slice(1)
-                    ? 'bg-blue-100 text-blue-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-100'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
+                className="relative px-4 py-2 text-sm font-medium"
               >
-                {link.name}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 bg-blue-50 rounded-full"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span
+                  className={`relative z-10 transition-colors duration-200 ${
+                    isActive ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  {link.name}
+                </span>
               </Link>
-            ))}
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center space-x-3">
+          {/* Auth control (desktop) */}
+          <div className="hidden md:flex items-center" ref={accountMenuRef}>
+            {!isLoading && user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsAccountMenuOpen((open) => !open)}
+                  className="flex items-center space-x-2 group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <FaChevronDown
+                    className={`text-xs text-gray-500 transition-transform duration-200 ${isAccountMenuOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {isAccountMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50"
+                    >
+                      <div className="px-4 py-2 text-sm text-gray-500 truncate border-b border-gray-100 mb-1">
+                        {user.name}
+                      </div>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        Dashboard
+                      </Link>
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsAccountMenuOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        Profile
+                      </Link>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsAccountMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"
+                      >
+                        Logout
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <Link href="/login" className="btn btn-primary text-sm py-2 px-5">
+                Login
+              </Link>
+            )}
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden text-gray-700 focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+          </button>
         </div>
-      )}
+      </div>
+
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="md:hidden bg-white shadow-lg overflow-hidden"
+          >
+            <div className="px-4 pt-2 pb-4 space-y-1">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.replace('#', '');
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`block px-3 py-2 rounded-lg font-medium transition-colors ${
+                      isActive
+                        ? 'bg-blue-50 text-blue-600 font-semibold'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+              <div className="pt-2 mt-2 border-t border-gray-100">
+                {!isLoading && user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-3 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/profile"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-3 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg font-medium text-red-600 hover:bg-gray-100"
+                    >
+                      Logout ({user.name})
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 rounded-lg font-medium text-blue-600 hover:bg-blue-50"
+                  >
+                    Login
+                  </Link>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

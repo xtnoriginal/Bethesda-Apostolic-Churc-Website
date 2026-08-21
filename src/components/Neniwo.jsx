@@ -20,7 +20,10 @@ export default function Neniwo() {
   }, [images.length]);
 
   return (
-    <section id="neniwo" className="section bg-gray-50">
+    <section id="neniwo" className="relative section overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-50 via-white to-blue-50" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-200/30 blur-3xl -z-10" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-blue-100/50 blur-3xl -z-10" />
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left side - Image Carousel (Desktop only) */}

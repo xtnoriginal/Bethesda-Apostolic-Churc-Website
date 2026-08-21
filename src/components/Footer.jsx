@@ -9,10 +9,13 @@ export default function Footer() {
   // Ministries link removed from quickLinks
   const quickLinks = [
     { name: 'Home', href: '#home' },
-    { name: 'About Us', href: '#about' },
+    { name: 'About Us', href: '/about' },
     { name: 'Sermons', href: '#sermons' },
-    { name: 'Events', href: '#events' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Events', href: '/events' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Archives', href: '#rchives' },
+    { name: 'Our Founder', href: '/founder' },
+    { name: 'Courses', href: '/courses' },
   ];
   
   const ministries = [

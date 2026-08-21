@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCalendarAlt, FaMapMarkerAlt, FaArrowLeft } from 'react-icons/fa';
-import EventModal from '../../components/EventModal'; // Adjust import path if needed
+import EventModal from '@/components/EventModal';
 import { useState } from 'react';
 
 // For simplicity, let's copy the events data here.
@@ -71,12 +71,6 @@ export default function EventsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex items-center justify-between mb-8">
-            <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-              <FaArrowLeft className="mr-2" />
-              Back to Home
-            </Link>
-          </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
             All <span className="text-blue-600">Upcoming Events</span>
