@@ -7,14 +7,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaFileAlt, FaGraduationCap, FaHeadphones, FaVideo } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
-import { courses } from '@/data/courses';
-
-const categories = ['All', ...Array.from(new Set(courses.map((c) => c.category)))];
 
 export default function CoursesPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
   const [filter, setFilter] = useState('All');
+  const [courses, setCourses] = useState([]);
+  const [isCoursesLoading, setIsCoursesLoading] = useState(true);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -22,10 +21,19 @@ export default function CoursesPage() {
     }
   }, [isLoading, user, router]);
 
-  if (isLoading || !user) {
+  useEffect(() => {
+    fetch('/api/courses')
+      .then((res) => res.json())
+      .then((data) => setCourses(data.courses || []))
+      .catch(() => setCourses([]))
+      .finally(() => setIsCoursesLoading(false));
+  }, []);
+
+  if (isLoading || !user || isCoursesLoading) {
     return <div className="section bg-white min-h-screen" />;
   }
 
+  const categories = ['All', ...Array.from(new Set(courses.map((c) => c.category)))];
   const filteredCourses = filter === 'All' ? courses : courses.filter((c) => c.category === filter);
 
   return (

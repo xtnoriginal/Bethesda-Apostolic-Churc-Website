@@ -4,9 +4,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import { FaArrowLeft, FaBook, FaFilePdf, FaPlayCircle } from 'react-icons/fa';
-import { getArchiveItemBySlug } from '@/data/archives';
 import PlaceholderNote from '@/components/PlaceholderNote';
 
 const typeIcons = {
@@ -17,10 +16,21 @@ const typeIcons = {
 
 export default function ArchiveDetailPage({ params }) {
   const { slug } = use(params);
-  const item = getArchiveItemBySlug(slug);
+  const [item, setItem] = useState(undefined);
 
-  if (!item) {
+  useEffect(() => {
+    fetch(`/api/archives/${slug}`)
+      .then((res) => (res.ok ? res.json() : Promise.resolve(null)))
+      .then((data) => setItem(data?.item || null))
+      .catch(() => setItem(null));
+  }, [slug]);
+
+  if (item === null) {
     notFound();
+  }
+
+  if (item === undefined) {
+    return <div className="bg-white min-h-screen" />;
   }
 
   const Icon = typeIcons[item.type] || FaBook;

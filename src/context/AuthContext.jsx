@@ -9,7 +9,9 @@ export function AuthProvider({ children }) {
   const { data: session, status, update } = useSession();
   const [progress, setProgress] = useState({});
 
-  const user = session?.user ? { name: session.user.name, email: session.user.email } : null;
+  const user = session?.user
+    ? { name: session.user.name, email: session.user.email, isAdmin: !!session.user.isAdmin }
+    : null;
   const isLoading = status === 'loading';
 
   useEffect(() => {

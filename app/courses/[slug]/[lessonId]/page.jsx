@@ -3,11 +3,9 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
-import { use, useState } from 'react';
-import { useEffect } from 'react';
+import { use, useEffect, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
-import { getCourseBySlug } from '@/data/courses';
 import LessonContent, { lessonTypeMeta } from '@/components/LessonContent';
 
 export default function LessonPage({ params }) {
@@ -15,6 +13,7 @@ export default function LessonPage({ params }) {
   const router = useRouter();
   const { user, isLoading, markLessonComplete, getProgress } = useAuth();
   const [, forceRerender] = useState(0);
+  const [course, setCourse] = useState(undefined);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -22,19 +21,25 @@ export default function LessonPage({ params }) {
     }
   }, [isLoading, user, router, slug, lessonId]);
 
-  const course = getCourseBySlug(slug);
-  if (!course) {
+  useEffect(() => {
+    fetch(`/api/courses/${slug}`)
+      .then((res) => (res.ok ? res.json() : Promise.resolve(null)))
+      .then((data) => setCourse(data?.course || null))
+      .catch(() => setCourse(null));
+  }, [slug]);
+
+  if (course === null) {
     notFound();
+  }
+
+  if (isLoading || !user || course === undefined) {
+    return <div className="section bg-white min-h-screen" />;
   }
 
   const lessonIndex = course.lessons.findIndex((l) => l.id === lessonId);
   const lesson = course.lessons[lessonIndex];
   if (!lesson) {
     notFound();
-  }
-
-  if (isLoading || !user) {
-    return <div className="section bg-white min-h-screen" />;
   }
 
   const completedLessons = getProgress(course.slug);

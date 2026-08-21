@@ -4,16 +4,16 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
-import { use, useEffect } from 'react';
+import { use, useEffect, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
-import { getCourseBySlug } from '@/data/courses';
 import { lessonTypeMeta } from '@/components/LessonContent';
 
 export default function CourseDetailPage({ params }) {
   const { slug } = use(params);
   const router = useRouter();
   const { user, isLoading, getProgress } = useAuth();
+  const [course, setCourse] = useState(undefined);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -21,13 +21,18 @@ export default function CourseDetailPage({ params }) {
     }
   }, [isLoading, user, router, slug]);
 
-  const course = getCourseBySlug(slug);
+  useEffect(() => {
+    fetch(`/api/courses/${slug}`)
+      .then((res) => (res.ok ? res.json() : Promise.resolve(null)))
+      .then((data) => setCourse(data?.course || null))
+      .catch(() => setCourse(null));
+  }, [slug]);
 
-  if (!course) {
+  if (course === null) {
     notFound();
   }
 
-  if (isLoading || !user) {
+  if (isLoading || !user || course === undefined) {
     return <div className="section bg-white min-h-screen" />;
   }
 

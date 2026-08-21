@@ -213,6 +213,15 @@ export default function Header() {
                       >
                         Profile
                       </Link>
+                      {user.isAdmin && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setIsAccountMenuOpen(false)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        >
+                          Admin
+                        </Link>
+                      )}
                       <button
                         onClick={() => {
                           logout();
@@ -322,6 +331,15 @@ export default function Header() {
                     >
                       Profile
                     </Link>
+                    {user.isAdmin && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block px-3 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
+                      >
+                        Admin
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         logout();

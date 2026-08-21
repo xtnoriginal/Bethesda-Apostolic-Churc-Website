@@ -3,9 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBook, FaPlayCircle, FaFilePdf } from 'react-icons/fa';
-import { archiveItems } from '@/data/archives';
 
 const typeIcons = {
   Sermon: FaPlayCircle,
@@ -26,9 +25,23 @@ function groupByYear(items) {
 
 export default function ArchivesPage() {
   const [filter, setFilter] = useState('All');
+  const [archiveItems, setArchiveItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/archives')
+      .then((res) => res.json())
+      .then((data) => setArchiveItems(data.items || []))
+      .catch(() => setArchiveItems([]))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   const filteredItems = filter === 'All' ? archiveItems : archiveItems.filter((i) => i.type === filter);
   const archiveData = groupByYear(filteredItems);
+
+  if (isLoading) {
+    return <div className="bg-white min-h-screen" />;
+  }
 
   return (
     <div className="bg-white min-h-screen">
