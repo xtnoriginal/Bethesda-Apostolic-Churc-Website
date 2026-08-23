@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
 
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,22 +13,9 @@ const nextConfig = {
     ],
   },
 
-  // Configure page extensions
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'mdx'],
-
-  // Enable static exports for static site generation
   output: 'standalone',
-
-  // Updated experimental option
   serverExternalPackages: ['sharp', 'onnxruntime-node'],
-
-  // Webpack configuration
-  webpack: (config) => {
-    config.resolve.extensions.push('.jsx');
-    return config;
-  },
-
-  // Enable source maps in development
   productionBrowserSourceMaps: process.env.NODE_ENV === 'development',
 };
 
