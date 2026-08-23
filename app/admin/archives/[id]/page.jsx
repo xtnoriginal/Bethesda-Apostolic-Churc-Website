@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
-import { FaArrowLeft, FaTrash } from 'react-icons/fa';
 import AdminGuard from '../../AdminGuard';
 import ArchiveForm from '../ArchiveForm';
+import { ArrowLeft, Trash2 } from 'lucide-react';
 
 function EditArchiveContent({ id }) {
   const router = useRouter();
@@ -59,11 +59,11 @@ function EditArchiveContent({ id }) {
       <div className="container mx-auto max-w-xl">
         <div className="flex items-center justify-between mb-8">
           <Link href="/admin/archives" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-            <FaArrowLeft className="mr-2" />
+            <ArrowLeft className="mr-2" />
             Back to Archives
           </Link>
           <button onClick={handleDelete} className="flex items-center text-red-600 hover:text-red-800 text-sm font-medium">
-            <FaTrash className="mr-2" />
+            <Trash2 className="mr-2" />
             Delete
           </button>
         </div>

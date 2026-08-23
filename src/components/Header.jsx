@@ -3,11 +3,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FaBars, FaChevronDown, FaTimes } from 'react-icons/fa';
+import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import { ministries } from '@/data/ministries';
+import { Menu, ChevronDown, X } from 'lucide-react';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,7 +69,7 @@ export default function Header() {
 
   const navLinks = [
     { name: 'About', href: '/about' },
-    { name: 'Sermons', href: '#sermons' },
+    { name: 'Sermons', href: '/#sermons' },
     { name: 'Events', href: '/events' },
     { name: 'Ministries', dropdown: true },
     { name: 'Our Founder', href: '/founder' },
@@ -95,6 +95,7 @@ export default function Header() {
               alt="Bethesda Apostolic Church Logo"
               fill
               className="object-contain"
+              sizes="40px"
               priority
             />
           </div>
@@ -114,7 +115,7 @@ export default function Header() {
                     className="relative px-4 py-2 text-sm font-medium flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors duration-200"
                   >
                     {link.name}
-                    <FaChevronDown
+                    <ChevronDown
                       className={`text-xs transition-transform duration-200 ${isMinistriesMenuOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
@@ -144,7 +145,7 @@ export default function Header() {
               );
             }
 
-            const isActive = activeSection === link.href.replace('#', '');
+            const isActive = link.href.includes('#') && activeSection === link.href.split('#')[1];
             return (
               <Link
                 key={link.name}
@@ -182,7 +183,7 @@ export default function Header() {
                   <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <FaChevronDown
+                  <ChevronDown
                     className={`text-xs text-gray-500 transition-transform duration-200 ${isAccountMenuOpen ? 'rotate-180' : ''}`}
                   />
                 </button>
@@ -248,7 +249,7 @@ export default function Header() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            {isMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
@@ -273,7 +274,7 @@ export default function Header() {
                         className="w-full flex items-center justify-between px-3 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100"
                       >
                         {link.name}
-                        <FaChevronDown
+                        <ChevronDown
                           className={`text-xs transition-transform duration-200 ${isMobileMinistriesOpen ? 'rotate-180' : ''}`}
                         />
                       </button>
@@ -298,7 +299,7 @@ export default function Header() {
                   );
                 }
 
-                const isActive = activeSection === link.href.replace('#', '');
+                const isActive = link.href.includes('#') && activeSection === link.href.split('#')[1];
                 return (
                   <Link
                     key={link.name}

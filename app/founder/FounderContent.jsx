@@ -1,10 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 import PlaceholderNote from '@/components/PlaceholderNote';
+import { ArrowLeft } from 'lucide-react';
 
 const visions = [
   {
@@ -193,7 +193,7 @@ export default function FounderPage() {
       {/* Back link bar */}
       <div className="container mx-auto px-4 pt-8">
         <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Home
         </Link>
       </div>
@@ -217,6 +217,7 @@ export default function FounderPage() {
                 alt="Placeholder portrait — to be replaced with a real photo of Arch Bishop Loveless Manhango"
                 fill
                 className="object-cover"
+                sizes="(min-width: 1024px) 33vw, 100vw"
               />
             </div>
             <div className="lg:w-2/3 text-center lg:text-left">

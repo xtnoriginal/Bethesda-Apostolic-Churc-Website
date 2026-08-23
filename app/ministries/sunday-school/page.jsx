@@ -2,10 +2,11 @@
 
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
-import { FaUserGraduate, FaHandsHelping, FaPaintBrush, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import { GraduationCap, HeartHandshake, Paintbrush } from 'lucide-react';
+import { Facebook, Whatsapp } from '@/components/BrandIcons';
 
 export default function SundaySchoolPage() {
   const ministryDescription = `
@@ -63,6 +64,8 @@ export default function SundaySchoolPage() {
           fill
           style={{ objectFit: 'cover' }}
           className="z-0"
+          sizes="100vw"
+          priority
         />
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 
@@ -186,11 +189,23 @@ export default function SundaySchoolPage() {
         >
           <h3 className="text-3xl font-bold mb-2">Connect with Us</h3>
           <div className="flex justify-center items-center space-x-6 mt-4">
-            <a href="#" className="text-white hover:text-gray-200 transition-colors">
-              <FaWhatsapp className="w-10 h-10" />
+            <a
+              href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Sunday School on WhatsApp"
+              className="text-white hover:text-gray-200 transition-colors"
+            >
+              <Whatsapp className="w-10 h-10" />
             </a>
-            <a href="https://www.facebook.com/profile.php?id=100092623952022" className="text-white hover:text-gray-200 transition-colors">
-              <FaFacebook className="w-10 h-10" />
+            <a
+              href="https://www.facebook.com/profile.php?id=100092623952022"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Sunday School on Facebook"
+              className="text-white hover:text-gray-200 transition-colors"
+            >
+              <Facebook className="w-10 h-10" />
             </a>
           </div>
         </motion.div>

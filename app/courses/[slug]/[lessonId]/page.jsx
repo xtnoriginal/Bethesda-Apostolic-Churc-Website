@@ -1,12 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
-import { FaArrowLeft, FaArrowRight, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
 import LessonContent, { lessonTypeMeta } from '@/components/LessonContent';
+import { ArrowLeft, ArrowRight, CircleCheck, Circle } from 'lucide-react';
 
 export default function LessonPage({ params }) {
   const { slug, lessonId } = use(params);
@@ -67,7 +67,7 @@ export default function LessonPage({ params }) {
             href={`/courses/${course.slug}`}
             className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8"
           >
-            <FaArrowLeft className="mr-2" />
+            <ArrowLeft className="mr-2" />
             Back to {course.title}
           </Link>
 
@@ -93,12 +93,12 @@ export default function LessonPage({ params }) {
           >
             {isComplete ? (
               <>
-                <FaCheckCircle className="mr-2" />
+                <CircleCheck className="mr-2" />
                 Completed
               </>
             ) : (
               <>
-                <FaRegCircle className="mr-2" />
+                <Circle className="mr-2" />
                 Mark Complete
               </>
             )}
@@ -110,7 +110,7 @@ export default function LessonPage({ params }) {
                 href={`/courses/${course.slug}/${prevLesson.id}`}
                 className="flex items-center text-gray-600 hover:text-blue-600 font-medium text-sm"
               >
-                <FaArrowLeft className="mr-2" />
+                <ArrowLeft className="mr-2" />
                 {prevLesson.title}
               </Link>
             ) : (
@@ -122,7 +122,7 @@ export default function LessonPage({ params }) {
                 className="flex items-center text-gray-600 hover:text-blue-600 font-medium text-sm text-right"
               >
                 {nextLesson.title}
-                <FaArrowRight className="ml-2" />
+                <ArrowRight className="ml-2" />
               </Link>
             ) : (
               <span />

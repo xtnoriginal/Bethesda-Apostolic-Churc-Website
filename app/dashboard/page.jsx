@@ -1,13 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { FaArrowRight, FaUserCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
 import { courses } from '@/data/courses';
+import { ArrowRight, CircleUserRound } from 'lucide-react';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -52,7 +52,7 @@ export default function DashboardPage() {
               href="/profile"
               className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
             >
-              <FaUserCircle className="text-xl" />
+              <CircleUserRound className="text-xl" />
               View Profile
             </Link>
           </div>
@@ -82,7 +82,13 @@ export default function DashboardPage() {
               {startedCourses.map((course) => (
                 <Link key={course.slug} href={`/courses/${course.slug}`} className="card block group">
                   <div className="relative w-full h-36">
-                    <Image src={course.image} alt={course.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
                   </div>
                   <div className="p-5">
                     <h3 className="font-bold mb-2">{course.title}</h3>
@@ -91,7 +97,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="flex items-center justify-between text-sm text-gray-500">
                       <span>{course.percent}% complete</span>
-                      <FaArrowRight className="text-blue-600" />
+                      <ArrowRight className="text-blue-600" />
                     </div>
                   </div>
                 </Link>
@@ -109,12 +115,18 @@ export default function DashboardPage() {
               {notStartedCourses.map((course) => (
                 <Link key={course.slug} href={`/courses/${course.slug}`} className="card block group">
                   <div className="relative w-full h-36">
-                    <Image src={course.image} alt={course.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
                   </div>
                   <div className="p-5">
                     <h3 className="font-bold mb-2">{course.title}</h3>
                     <span className="text-blue-600 text-sm font-medium inline-flex items-center">
-                      Start course <FaArrowRight className="ml-2" />
+                      Start course <ArrowRight className="ml-2" />
                     </span>
                   </div>
                 </Link>

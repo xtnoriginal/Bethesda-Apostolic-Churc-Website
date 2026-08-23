@@ -1,10 +1,11 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import DonateModal from './DonateModal';
+import { Building2, MapPin, Handshake } from 'lucide-react';
 
 export default function Neniwo() {
   const images = ['/images/neniwologo.jpg', '/images/neniwo.jpg'];
@@ -23,7 +24,7 @@ export default function Neniwo() {
     <section id="neniwo" className="relative section overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-50 via-white to-blue-50" />
       <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-200/30 blur-3xl -z-10" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-blue-100/50 blur-3xl -z-10" />
+      <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-khaki-200/50 blur-3xl -z-10" />
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left side - Image Carousel (Desktop only) */}
@@ -49,6 +50,7 @@ export default function Neniwo() {
                     alt={`Neniwo Project Image ${currentImageIndex + 1}`}
                     fill
                     className="object-cover"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     priority
                   />
                 </motion.div>
@@ -106,6 +108,7 @@ export default function Neniwo() {
                       alt={`Neniwo Project Image ${currentImageIndex + 1}`}
                       fill
                       className="object-cover"
+                      sizes="(min-width: 1024px) 50vw, calc(100vw - 2rem)"
                       priority
                     />
                   </motion.div>
@@ -145,24 +148,24 @@ export default function Neniwo() {
             <div className="space-y-4">
               {[
                 {
-                  icon: '🏗️',
+                  icon: Building2,
                   title: 'The Vision',
                   description: 'A 30,000-seater worship center that will serve as a spiritual landmark for generations.'
                 },
                 {
-                  icon: '📍',
+                  icon: MapPin,
                   title: 'Location',
                   description: 'Chivhu Sadza, strategically positioned to serve the surrounding communities.'
                 },
                 {
-                  icon: '🤝',
+                  icon: Handshake,
                   title: 'Be Part of It',
                   description: 'Join us in prayer, giving, and service as we build God\'s house together.'
                 }
               ].map((item, index) => (
                 <div key={index} className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
-                    {item.icon}
+                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                    <item.icon className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">{item.title}</h4>

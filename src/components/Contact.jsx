@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useState } from 'react';
-import { FaCheckCircle, FaMapMarkerAlt, FaPhone, FaEnvelope, FaChurch, FaClock, FaFacebook, FaWhatsapp, FaYoutube } from 'react-icons/fa';
-
+import { CircleCheck, MapPin, Phone, Mail, Church, Clock } from 'lucide-react';
+import { Facebook, Whatsapp, Youtube } from './BrandIcons';
 const initialFormState = { name: '', email: '', subject: '', message: '' };
 
 export default function Contact() {
@@ -88,7 +88,7 @@ export default function Contact() {
             <div className="space-y-4">
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaMapMarkerAlt />
+                  <MapPin />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Our Location</h4>
@@ -98,7 +98,7 @@ export default function Contact() {
               
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaPhone />
+                  <Phone />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Phone Number</h4>
@@ -108,7 +108,7 @@ export default function Contact() {
               
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaEnvelope />
+                  <Mail />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Email Address</h4>
@@ -119,14 +119,14 @@ export default function Contact() {
               <div className="pt-4 mt-4 border-t border-gray-100">
                 <h4 className="font-semibold text-gray-900 mb-3">Follow Us</h4>
                 <div className="flex space-x-3">
-                  <a href="https://www.facebook.com/share/g/1MUa4mMqrp/" className="w-10 h-10 bg-[#3b5998] text-white rounded-full flex items-center justify-center hover:bg-[#2d4373] transition-colors">
-                    <FaFacebook />
+                  <a href="https://www.facebook.com/share/g/1MUa4mMqrp/" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on Facebook" className="w-10 h-10 bg-[#3b5998] text-white rounded-full flex items-center justify-center hover:bg-[#2d4373] transition-colors">
+                    <Facebook />
                   </a>
-                  <a href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T" className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
-                    <FaWhatsapp />
+                  <a href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on WhatsApp" className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
+                    <Whatsapp />
                   </a>
-                  <a href="https://www.youtube.com/@bethesdaapostolicchurch4090" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                    <FaYoutube />
+                  <a href="https://www.youtube.com/@bethesdaapostolicchurch4090" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on YouTube" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                    <Youtube />
                   </a>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function Contact() {
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaChurch className="text-xl" />
+                  <Church className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Sunday Service</h4>
@@ -156,7 +156,7 @@ export default function Contact() {
               
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaClock className="text-xl" />
+                  <Clock className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Mid week prayer</h4>
@@ -166,7 +166,7 @@ export default function Contact() {
               
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaClock className="text-xl" />
+                  <Clock className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Mid week prayer</h4>
@@ -192,7 +192,7 @@ export default function Contact() {
 
             {status === 'success' ? (
               <div className="text-center py-8">
-                <FaCheckCircle className="text-4xl text-green-500 mx-auto mb-4" />
+                <CircleCheck className="text-4xl text-green-500 mx-auto mb-4" />
                 <p className="font-semibold text-gray-900 mb-1">Message sent!</p>
                 <p className="text-gray-600 text-sm mb-6">We'll get back to you as soon as we can.</p>
                 <button

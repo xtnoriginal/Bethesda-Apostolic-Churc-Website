@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { FaHome } from 'react-icons/fa';
-
+import { Home } from 'lucide-react';
 export const metadata = {
-  title: 'Page Not Found | Bethesda Apostolic Church',
+  title: 'Page Not Found',
+  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {
@@ -19,7 +19,7 @@ export default function NotFound() {
           The page you're looking for doesn't exist or may have been moved.
         </p>
         <Link href="/" className="btn btn-primary inline-flex items-center">
-          <FaHome className="mr-2" />
+          <Home className="mr-2" />
           Back to Home
         </Link>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,6 +21,7 @@ export default function FounderTeaser() {
               alt="Placeholder portrait — to be replaced with a real photo of Arch Bishop Loveless Manhango"
               fill
               className="object-cover"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </motion.div>
 

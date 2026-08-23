@@ -1,11 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaArrowLeft, FaCheckCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
+import { ArrowLeft, CircleCheck } from 'lucide-react';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function ProfilePage() {
     <div className="section bg-gray-50 min-h-screen">
       <div className="container mx-auto max-w-xl">
         <Link href="/dashboard" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Dashboard
         </Link>
 
@@ -93,7 +93,7 @@ export default function ProfilePage() {
               </button>
               {saved && (
                 <span className="flex items-center text-green-600 text-sm font-medium">
-                  <FaCheckCircle className="mr-2" />
+                  <CircleCheck className="mr-2" />
                   Saved
                 </span>
               )}

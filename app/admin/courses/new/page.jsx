@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
 import AdminGuard from '../../AdminGuard';
 import UploadField from '../../UploadField';
+import { ArrowLeft } from 'lucide-react';
 
 function slugify(text) {
   return text
@@ -54,7 +54,7 @@ function NewCourseContent() {
     <div className="section bg-white min-h-screen">
       <div className="container mx-auto max-w-xl">
         <Link href="/admin/courses" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Courses
         </Link>
 

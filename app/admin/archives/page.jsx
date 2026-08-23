@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FaArrowLeft, FaPlus, FaTrash } from 'react-icons/fa';
 import AdminGuard from '../AdminGuard';
+import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 function ArchivesListContent() {
   const [items, setItems] = useState([]);
@@ -34,14 +34,14 @@ function ArchivesListContent() {
     <div className="section bg-white min-h-screen">
       <div className="container mx-auto max-w-3xl">
         <Link href="/admin" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Admin
         </Link>
 
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Archives</h1>
           <Link href="/admin/archives/new" className="btn btn-primary text-sm">
-            <FaPlus className="mr-2" />
+            <Plus className="mr-2" />
             New Item
           </Link>
         </div>
@@ -60,7 +60,7 @@ function ArchivesListContent() {
                   Edit
                 </Link>
                 <button onClick={() => handleDelete(item)} className="text-red-600 hover:text-red-800" aria-label="Delete item">
-                  <FaTrash />
+                  <Trash2 />
                 </button>
               </div>
             </div>

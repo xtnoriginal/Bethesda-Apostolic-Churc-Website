@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -71,7 +71,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
-            Welcome to <span className="text-blue-400">Bethesda</span> Apostolic Church
+            Welcome to <span className="text-gold-500">Bethesda</span> Apostolic Church
           </h1>
           <p className="text-lg text-gray-100 mb-8 leading-relaxed">
             A vibrant community of believers dedicated to spreading the love of Christ.
@@ -105,7 +105,7 @@ export default function Hero() {
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <h4 className="font-semibold text-white">{item.label}</h4>
-                <p className="text-blue-300 font-medium">{item.value}</p>
+                <p className="text-gold-300 font-medium">{item.value}</p>
               </motion.div>
             ))}
           </div>
