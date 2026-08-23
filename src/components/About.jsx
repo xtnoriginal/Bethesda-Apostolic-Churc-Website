@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Cross, Eye, Heart } from 'lucide-react';
 
 export default function About() {
   const images = ['/1.jpg', '/2.jpg'];
@@ -41,9 +42,10 @@ export default function About() {
                   >
                     <Image
                       src={images[currentImageIndex]}
-                      alt={`Church image ${currentImageIndex + 1}`}
+                      alt="Congregation at Bethesda Apostolic Church in Harare, Zimbabwe"
                       fill
                       className="object-cover"
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       priority
                     />
                   </motion.div>
@@ -117,9 +119,10 @@ export default function About() {
                     >
                       <Image
                         src={images[currentImageIndex]}
-                        alt={`Church image ${currentImageIndex + 1}`}
+                        alt="Congregation at Bethesda Apostolic Church in Harare, Zimbabwe"
                         fill
                         className="object-cover"
+                        sizes="(min-width: 1024px) 50vw, calc(100vw - 2rem)"
                         priority
                       />
                     </motion.div>
@@ -150,24 +153,24 @@ export default function About() {
             <div className="space-y-4 mt-8 lg:mt-0">
               {[
                 {
-                  icon: '✝️',
+                  icon: Cross,
                   title: 'Our Beliefs',
                   description: 'We believe in the Bible as the inspired Word of God and the foundation of our faith.'
                 },
                 {
-                  icon: '🙏',
+                  icon: Eye,
                   title: 'Our Vision',
                   description: 'To be a church that transforms lives through the power of the Gospel.'
                 },
                 {
-                  icon: '❤️',
+                  icon: Heart,
                   title: 'Our Values',
                   description: 'Love, faith, integrity, service, and community guide everything we do.'
                 }
               ].map((item, index) => (
                 <div key={index} className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
-                    {item.icon}
+                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                    <item.icon className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">{item.title}</h4>
@@ -179,13 +182,13 @@ export default function About() {
             
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                href="#beliefs"
+                href="/about"
                 className="btn btn-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700"
               >
                 Our Beliefs
               </Link>
               <Link
-                href="#priest"
+                href="/founder"
                 className="btn bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 transition duration-300 ease-in-out hover:scale-105"
               >
                 Meet Our Priest

@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { FaArrowLeft, FaBook, FaGraduationCap } from 'react-icons/fa';
 import AdminGuard from './AdminGuard';
+import { ArrowLeft, BookOpen, GraduationCap } from 'lucide-react';
 
 export default function AdminPage() {
   return (
@@ -10,7 +10,7 @@ export default function AdminPage() {
       <div className="section bg-gray-50 min-h-screen">
         <div className="container mx-auto max-w-3xl">
           <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-            <FaArrowLeft className="mr-2" />
+            <ArrowLeft className="mr-2" />
             Back to Site
           </Link>
 
@@ -19,12 +19,12 @@ export default function AdminPage() {
 
           <div className="grid sm:grid-cols-2 gap-6">
             <Link href="/admin/courses" className="card p-8 block hover:shadow-lg transition-shadow">
-              <FaGraduationCap className="text-3xl text-blue-600 mb-4" />
+              <GraduationCap className="text-3xl text-blue-600 mb-4" />
               <h2 className="text-xl font-bold mb-1">Courses</h2>
               <p className="text-gray-600 text-sm">Create and edit courses and their lessons.</p>
             </Link>
             <Link href="/admin/archives" className="card p-8 block hover:shadow-lg transition-shadow">
-              <FaBook className="text-3xl text-blue-600 mb-4" />
+              <BookOpen className="text-3xl text-blue-600 mb-4" />
               <h2 className="text-xl font-bold mb-1">Archives</h2>
               <p className="text-gray-600 text-sm">Create and edit sermons, articles, and PDFs.</p>
             </Link>

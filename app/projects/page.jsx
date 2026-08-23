@@ -1,12 +1,10 @@
 
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
-
-
+import { ArrowLeft } from 'lucide-react';
 const projectUpdates = [
     { id: 1, image: '/images/28.jpg', date: '**** 2025' },
     { id: 2, image: '/images/22.jpg', date: '**** 2025 ' },
@@ -34,7 +32,7 @@ export default function ProjectsPage() {
         >
           <div className="flex items-center justify-between mb-8">
             <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-              <FaArrowLeft className="mr-2" />
+              <ArrowLeft className="mr-2" />
               Back to Home
             </Link>
           </div>

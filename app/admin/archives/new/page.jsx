@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FaArrowLeft } from 'react-icons/fa';
 import AdminGuard from '../../AdminGuard';
 import ArchiveForm from '../ArchiveForm';
+import { ArrowLeft } from 'lucide-react';
 
 function NewArchiveContent() {
   const router = useRouter();
@@ -24,7 +24,7 @@ function NewArchiveContent() {
     <div className="section bg-white min-h-screen">
       <div className="container mx-auto max-w-xl">
         <Link href="/admin/archives" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Archives
         </Link>
 

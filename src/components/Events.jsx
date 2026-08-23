@@ -1,50 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import EventModal from './EventModal'; 
-
-const events = [
-  {
-    id: 1,
-    title: 'Youth Conference',
-    date: '7 - 10 August, 2025',
-    location: 'Chiwiriri',
-    description: 'Join us for our Youth Conference with inspiring music and a powerful message from God\'s Word.',
-    images: ['/images/13.jpg', '/images/8.jpg'],
-    category: 'Youth'
-   },
-  {
-    id: 2,
-    title: 'Ruwadzano Conference',
-    date: '28 - 31 August 2025',
-    location: 'Chiwiriri',
-    description: 'Join us for our Ruwadzano Conference with inspiring music and a powerful message from God\'s Word.',
-    images: ['/images/11.jpg', '/images/6.jpg', '/images/15.jpg', '/images/32.jpg'],
-    category: 'Ruwadzano'
-  },
-  {
-    id: 3,
-    title: 'Matumba Conference',
-    date: '17 - 19 October, 2025',
-    location: 'Chiwiriri',
-    description: 'Join us for our Matumba Conference with inspiring music and a powerful message from God\'s Word.',
-    images: ['/images/12.jpg', '/images/9.jpg', '/images/7.jpg'],
-    category: 'Church'
-  },
-  {
-    id: 4,
-    title: 'BMCU Conference',
-    date: '14 - 16 November, 2025',
-    location: 'Vic Falls',
-    description: 'Join us for our BMCU Conference with inspiring music and a powerful message from God\'s Word.',
-    images: ['/images/5.jpg', '/images/14.jpg', '/images/16.jpg'],
-    category: 'BMCU'
-  },
-];
+import EventModal from './EventModal';
+import { events } from '@/data/events';
+import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 
 export default function Events() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -115,6 +77,7 @@ export default function Events() {
                     alt={event.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(min-width: 768px) 25vw, 100vw"
                   />
                 </div>
                 
@@ -123,11 +86,11 @@ export default function Events() {
                   
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center text-gray-600 text-sm">
-                      <FaCalendarAlt className="mr-2 text-blue-600" />
+                      <Calendar className="mr-2 text-blue-600" />
                       <span>{event.date}</span>
                     </div>
                     <div className="flex items-center text-gray-600 text-sm">
-                      <FaMapMarkerAlt className="mr-2 text-blue-600" />
+                      <MapPin className="mr-2 text-blue-600" />
                       <span>{event.location}</span>
                     </div>
                   </div>
@@ -136,9 +99,13 @@ export default function Events() {
                   
                   <button
                     onClick={() => handleOpenModal(event)}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-transform duration-200 hover:scale-105 inline-block"
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-transform duration-200 hover:scale-105 inline-flex items-center gap-1 group/link"
                   >
-                    Learn More →
+                    Learn More
+                    <ArrowRight
+                      className="w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+                      aria-hidden="true"
+                    />
                   </button>
                 </div>
               </div>

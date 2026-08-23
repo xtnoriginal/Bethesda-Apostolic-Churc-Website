@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
-import { FaArrowLeft, FaPlus, FaTrash } from 'react-icons/fa';
 import AdminGuard from '../../AdminGuard';
 import UploadField from '../../UploadField';
+import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 function LessonForm({ courseId, lesson, onSaved, onCancel }) {
   const isEdit = !!lesson;
@@ -213,7 +213,7 @@ function EditCourseContent({ id }) {
     <div className="section bg-white min-h-screen">
       <div className="container mx-auto max-w-3xl">
         <Link href="/admin/courses" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to Courses
         </Link>
 
@@ -253,7 +253,7 @@ function EditCourseContent({ id }) {
           <h2 className="text-2xl font-bold">Lessons</h2>
           {editingLesson === undefined && (
             <button onClick={() => setEditingLesson(null)} className="btn btn-secondary text-sm">
-              <FaPlus className="mr-2" />
+              <Plus className="mr-2" />
               Add Lesson
             </button>
           )}
@@ -292,7 +292,7 @@ function EditCourseContent({ id }) {
                     className="text-red-600 hover:text-red-800"
                     aria-label="Delete lesson"
                   >
-                    <FaTrash />
+                    <Trash2 />
                   </button>
                 </div>
               </div>

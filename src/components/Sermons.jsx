@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaYoutube, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import { Calendar, Clock } from 'lucide-react';
+import { Youtube } from './BrandIcons';
 
 const sermons = [
   {
@@ -91,13 +92,14 @@ export default function Sermons() {
                     alt={sermon.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors"
                       aria-label={`Play sermon: ${sermon.title}`}
                     >
-                      <FaYoutube className="text-4xl" />
+                      <Youtube className="text-4xl" />
                     </button>
                   </div>
                   <div className="absolute top-4 right-4 bg-white/90 text-red-600 text-xs font-semibold px-2 py-1 rounded">
@@ -109,11 +111,11 @@ export default function Sermons() {
               <div className="p-6">
                 <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
                   <div className="flex items-center">
-                    <FaCalendarAlt className="mr-1" />
+                    <Calendar className="mr-1" />
                     <span>{sermon.date}</span>
                   </div>
                   <div className="flex items-center">
-                    <FaClock className="mr-1" />
+                    <Clock className="mr-1" />
                     <span>{sermon.duration}</span>
                   </div>
                 </div>
@@ -129,7 +131,7 @@ export default function Sermons() {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-red-600 hover:text-red-700 flex items-center hover:scale-105 transition-transform duration-200"
                   >
-                    <FaYoutube className="mr-1 text-base" /> Watch Sermon
+                    <Youtube className="mr-1 text-base" /> Watch Sermon
                   </Link>
                 </div>
               </div>

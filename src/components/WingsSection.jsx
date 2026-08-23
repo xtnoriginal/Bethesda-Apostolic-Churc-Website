@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ministries } from '@/data/ministries';
@@ -36,6 +36,7 @@ export default function WingsSection() {
                     alt={ministry.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   />
                 </div>
                 <div className="p-6">

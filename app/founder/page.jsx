@@ -1,11 +1,36 @@
 import FounderContent from './FounderContent';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbs, founderId, churchId } from '@/lib/jsonld';
+import { absoluteUrl } from '@/lib/site';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Our Founder | Bethesda Apostolic Church',
+export const metadata = pageMetadata({
+  title: 'Our Founder',
   description:
-    "The story of Arch Bishop Loveless Manhango's calling, the fourteen visions, and his evangelism journeys.",
-};
+    "Arch Bishop Loveless Manhango — founder of Bethesda Apostolic Church. The 1952 calling, fourteen visions, and evangelism journeys.",
+  path: '/founder',
+});
 
 export default function FounderPage() {
-  return <FounderContent />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ProfilePage',
+            name: 'Arch Bishop Loveless Manhango',
+            url: absoluteUrl('/founder'),
+            mainEntity: { '@id': founderId },
+            about: { '@id': churchId },
+          },
+          breadcrumbs([
+            { name: 'Home', path: '/' },
+            { name: 'Our Founder', path: '/founder' },
+          ]),
+        ]}
+      />
+      <FounderContent />
+    </>
+  );
 }

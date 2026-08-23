@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import Link from 'next/link';
 import BaccetDonateModal from './BaccetDonateModal';
+import { GraduationCap, Heart, Handshake } from 'lucide-react';
 
 export default function Baccet() {
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
@@ -47,24 +48,24 @@ export default function Baccet() {
             <div className="space-y-4 mb-8">
               {[
                 {
-                  icon: '🎓',
+                  icon: GraduationCap,
                   title: 'Our Impact',
                   description: 'Supporting over 100 students annually with full educational support.'
                 },
                 {
-                  icon: '❤️',
+                  icon: Heart,
                   title: 'Our Mission',
                   description: 'Ensuring no child is denied education due to financial constraints.'
                 },
                 {
-                  icon: '🤝',
+                  icon: Handshake,
                   title: 'Get Involved',
                   description: 'Your support can change a child\'s life through education.'
                 }
               ].map((item, index) => (
                 <div key={index} className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4">
-                    {item.icon}
+                  <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                    <item.icon className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">{item.title}</h4>
@@ -77,7 +78,7 @@ export default function Baccet() {
             {/* Button group for desktop view */}
             <div className="hidden lg:flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a
-                href="#apply"
+                href="/contact"
                 className="btn bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto text-center"
               >
                 Apply for Scholarship
@@ -139,7 +140,7 @@ export default function Baccet() {
               {/* Button group for mobile view */}
               <div className="flex lg:hidden flex-col sm:flex-row gap-3 sm:gap-4 mt-6">
                 <a
-                  href="#apply"
+                  href="/contact"
                   className="btn bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto text-center"
                 >
                   Apply for Scholarship

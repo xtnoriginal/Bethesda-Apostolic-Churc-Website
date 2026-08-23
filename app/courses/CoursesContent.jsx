@@ -1,12 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaArrowLeft, FaFileAlt, FaGraduationCap, FaHeadphones, FaVideo } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
+import { ArrowLeft, FileText, GraduationCap, Headphones, Video } from 'lucide-react';
 
 export default function CoursesPage() {
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function CoursesPage() {
         >
           <div className="flex items-center justify-between mb-8">
             <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-              <FaArrowLeft className="mr-2" />
+              <ArrowLeft className="mr-2" />
               Back to Home
             </Link>
           </div>
@@ -96,6 +96,7 @@ export default function CoursesPage() {
                     alt={course.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   />
                 </div>
                 <div className="p-6">
@@ -106,13 +107,13 @@ export default function CoursesPage() {
                   <p className="text-gray-600 mb-4">{course.description}</p>
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center">
-                      <FaGraduationCap className="mr-2" />
+                      <GraduationCap className="mr-2" />
                       {course.lessons.length} lessons
                     </div>
                     <div className="flex items-center gap-2 text-gray-400">
-                      <FaFileAlt title="Includes text" />
-                      {hasAudio && <FaHeadphones title="Includes audio" />}
-                      {hasVideo && <FaVideo title="Includes video" />}
+                      <FileText title="Includes text" />
+                      {hasAudio && <Headphones title="Includes audio" />}
+                      {hasVideo && <Video title="Includes video" />}
                     </div>
                   </div>
                 </div>

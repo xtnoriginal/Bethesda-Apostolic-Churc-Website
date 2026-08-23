@@ -1,13 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { use } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
 import { getMinistryBySlug } from '@/data/ministries';
 import PlaceholderNote from '@/components/PlaceholderNote';
+import { ArrowLeft } from 'lucide-react';
 
 export default function MinistryPage({ params }) {
   const { slug } = use(params);
@@ -21,7 +21,14 @@ export default function MinistryPage({ params }) {
   return (
     <div className="bg-white min-h-screen">
       <header className="relative h-[320px] md:h-[400px] flex items-center justify-center text-center p-4">
-        <Image src={ministry.image} alt={ministry.name} fill className="object-cover z-0" />
+        <Image
+          src={ministry.image}
+          alt={ministry.name}
+          fill
+          className="object-cover z-0"
+          sizes="100vw"
+          priority
+        />
         <div className="absolute inset-0 bg-black/50 z-10" />
         <motion.div
           className="relative z-20"
@@ -36,7 +43,7 @@ export default function MinistryPage({ params }) {
 
       <div className="container mx-auto px-4 py-16 max-w-3xl">
         <Link href="/about" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-          <FaArrowLeft className="mr-2" />
+          <ArrowLeft className="mr-2" />
           Back to About
         </Link>
 

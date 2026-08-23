@@ -1,13 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
-import { FaArrowLeft, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import { useAuth } from '@/context/AuthContext';
 import { lessonTypeMeta } from '@/components/LessonContent';
+import { ArrowLeft, ArrowRight, CircleCheck } from 'lucide-react';
 
 export default function CourseDetailPage({ params }) {
   const { slug } = use(params);
@@ -48,12 +48,18 @@ export default function CourseDetailPage({ params }) {
           transition={{ duration: 0.5 }}
         >
           <Link href="/courses" className="flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-8">
-            <FaArrowLeft className="mr-2" />
+            <ArrowLeft className="mr-2" />
             Back to Courses
           </Link>
 
           <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl mb-8">
-            <Image src={course.image} alt={course.title} fill className="object-cover" />
+            <Image
+              src={course.image}
+              alt={course.title}
+              fill
+              className="object-cover"
+              sizes="(min-width: 1280px) 80rem, 100vw"
+            />
           </div>
 
           <div className="inline-block px-3 py-1 mb-4 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full">
@@ -89,7 +95,7 @@ export default function CourseDetailPage({ params }) {
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-semibold">
-                      {isComplete ? <FaCheckCircle className="text-green-600" /> : index + 1}
+                      {isComplete ? <CircleCheck className="text-green-600" /> : index + 1}
                     </div>
                     <div className="min-w-0">
                       <div className="font-medium text-gray-900 truncate">{lesson.title}</div>
@@ -98,7 +104,7 @@ export default function CourseDetailPage({ params }) {
                       </div>
                     </div>
                   </div>
-                  <FaArrowRight className="flex-shrink-0 text-gray-300 group-hover:text-blue-600 transition-colors" />
+                  <ArrowRight className="flex-shrink-0 text-gray-300 group-hover:text-blue-600 transition-colors" />
                 </Link>
               );
             })}
