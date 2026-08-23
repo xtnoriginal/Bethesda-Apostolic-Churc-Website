@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  progress  LessonProgress[]
+}
+
+model LessonProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  courseSlug  String
+  lessonId    String
+  completedAt DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseSlug, lessonId])
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  category    String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lessons     Lesson[]
+}
+
+model Lesson {
+  id           String   @id @default(cuid())
+  lessonKey    String
+  courseId     String
+  title        String
+  type         String
+  duration     String
+  order        Int      @default(0)
+  body         String?
+  audioUrl     String?
+  isDraft      Boolean  @default(false)
+  isComingSoon Boolean  @default(false)
+  linkHref     String?
+  linkLabel    String?
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, lessonKey])
+}
+
+model ArchiveItem {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  title             String
+  type              String
+  date              DateTime
+  image             String
+  description       String
+  body              String?
+  isDraft           Boolean  @default(false)
+  isDownloadPending Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}

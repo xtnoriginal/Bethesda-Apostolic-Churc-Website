@@ -1,10 +1,9 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { FaTimes, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
-
+import { X, Calendar, MapPin } from 'lucide-react';
 // The duration for each image in the carousel in milliseconds
 const CAROUSEL_INTERVAL = 7000;
 
@@ -43,7 +42,7 @@ export default function EventModal({ event, onClose }) {
             className="absolute top-4 right-4 text-white z-20 bg-black/30 p-2 rounded-full hover:bg-black/50 transition-colors"
             aria-label="Close modal"
           >
-            <FaTimes className="text-xl" />
+            <X className="text-xl" />
           </button>
 
           {/* Image Carousel */}
@@ -62,7 +61,7 @@ export default function EventModal({ event, onClose }) {
                   alt={`${event.title} image ${currentImageIndex + 1}`}
                   fill
                   className="object-cover"
-                  sizes="100vw"
+                  sizes="(min-width: 768px) 42rem, 100vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -84,11 +83,11 @@ export default function EventModal({ event, onClose }) {
             
             <div className="flex flex-wrap items-center text-sm text-gray-600 mb-6 space-y-2 md:space-y-0 md:space-x-6">
               <div className="flex items-center">
-                <FaCalendarAlt className="mr-2 text-blue-600" />
+                <Calendar className="mr-2 text-blue-600" />
                 <span>{event.date}</span>
               </div>
               <div className="flex items-center">
-                <FaMapMarkerAlt className="mr-2 text-blue-600" />
+                <MapPin className="mr-2 text-blue-600" />
                 <span>{event.location}</span>
               </div>
             </div>

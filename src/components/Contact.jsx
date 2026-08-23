@@ -1,9 +1,46 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaChurch, FaClock, FaFacebook, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+import { motion } from 'motion/react';
+import { useState } from 'react';
+import { CircleCheck, MapPin, Phone, Mail, Church, Clock } from 'lucide-react';
+import { Facebook, Whatsapp, Youtube } from './BrandIcons';
+const initialFormState = { name: '', email: '', subject: '', message: '' };
 
 export default function Contact() {
+  const [formData, setFormData] = useState(initialFormState);
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('idle'); // idle | submitting | success
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const validate = () => {
+    const nextErrors = {};
+    if (!formData.name.trim()) nextErrors.name = 'Please enter your name.';
+    if (!formData.email.trim()) {
+      nextErrors.email = 'Please enter your email.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      nextErrors.email = 'Please enter a valid email address.';
+    }
+    if (!formData.message.trim()) nextErrors.message = 'Please enter a message.';
+    return nextErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const nextErrors = validate();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setStatus('submitting');
+    // No backend yet — this simulates a submission so the flow can be reviewed end to end.
+    setTimeout(() => {
+      setStatus('success');
+      setFormData(initialFormState);
+    }, 600);
+  };
   return (
     <section id="contact" className="section bg-gray-50">
       <div className="container mx-auto">
@@ -51,7 +88,7 @@ export default function Contact() {
             <div className="space-y-4">
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaMapMarkerAlt />
+                  <MapPin />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Our Location</h4>
@@ -61,7 +98,7 @@ export default function Contact() {
               
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaPhone />
+                  <Phone />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Phone Number</h4>
@@ -71,7 +108,7 @@ export default function Contact() {
               
               <div className="flex items-start">
                 <div className="bg-blue-100 p-3 rounded-full text-blue-600 mr-4">
-                  <FaEnvelope />
+                  <Mail />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900">Email Address</h4>
@@ -82,14 +119,14 @@ export default function Contact() {
               <div className="pt-4 mt-4 border-t border-gray-100">
                 <h4 className="font-semibold text-gray-900 mb-3">Follow Us</h4>
                 <div className="flex space-x-3">
-                  <a href="https://www.facebook.com/share/g/1MUa4mMqrp/" className="w-10 h-10 bg-[#3b5998] text-white rounded-full flex items-center justify-center hover:bg-[#2d4373] transition-colors">
-                    <FaFacebook />
+                  <a href="https://www.facebook.com/share/g/1MUa4mMqrp/" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on Facebook" className="w-10 h-10 bg-[#3b5998] text-white rounded-full flex items-center justify-center hover:bg-[#2d4373] transition-colors">
+                    <Facebook />
                   </a>
-                  <a href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T" className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
-                    <FaWhatsapp />
+                  <a href="https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on WhatsApp" className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
+                    <Whatsapp />
                   </a>
-                  <a href="https://www.youtube.com/@bethesdaapostolicchurch4090" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                    <FaYoutube />
+                  <a href="https://www.youtube.com/@bethesdaapostolicchurch4090" target="_blank" rel="noopener noreferrer" aria-label="Bethesda Apostolic Church on YouTube" className="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                    <Youtube />
                   </a>
                 </div>
               </div>
@@ -109,7 +146,7 @@ export default function Contact() {
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaChurch className="text-xl" />
+                  <Church className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Sunday Service</h4>
@@ -119,7 +156,7 @@ export default function Contact() {
               
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaClock className="text-xl" />
+                  <Clock className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Mid week prayer</h4>
@@ -129,7 +166,7 @@ export default function Contact() {
               
               <div className="flex items-center">
                 <div className="bg-white/20 p-3 rounded-xl mr-4">
-                  <FaClock className="text-xl" />
+                  <Clock className="text-xl" />
                 </div>
                 <div>
                   <h4 className="font-semibold">Mid week prayer</h4>
@@ -152,55 +189,81 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h3 className="text-xl font-bold mb-6">Send Us a Message</h3>
-            
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Theo Madzinga"
-                />
+
+            {status === 'success' ? (
+              <div className="text-center py-8">
+                <CircleCheck className="text-4xl text-green-500 mx-auto mb-4" />
+                <p className="font-semibold text-gray-900 mb-1">Message sent!</p>
+                <p className="text-gray-600 text-sm mb-6">We'll get back to you as soon as we can.</p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                >
+                  Send another message
+                </button>
               </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="you@example.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                <input 
-                  type="text" 
-                  id="subject" 
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="How can we help you?"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
-                <textarea 
-                  id="message" 
-                  rows="4"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="Type your message here..."
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit" 
-                className="w-full btn btn-primary mt-2"
-              >
-                Send Message
-              </button>
-            </form>
+            ) : (
+              <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Theo Madzinga"
+                  />
+                  {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="you@example.com"
+                  />
+                  {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="How can we help you?"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                  <textarea
+                    id="message"
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Type your message here..."
+                  ></textarea>
+                  {errors.message && <p className="text-red-600 text-xs mt-1">{errors.message}</p>}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="w-full btn btn-primary mt-2 disabled:opacity-60"
+                >
+                  {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
         

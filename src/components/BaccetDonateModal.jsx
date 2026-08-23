@@ -1,8 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
-
+import { motion } from 'motion/react';
+import { X } from 'lucide-react';
 export default function BaccetDonateModal({ onClose }) {
   return (
     <div
@@ -23,7 +22,7 @@ export default function BaccetDonateModal({ onClose }) {
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors"
             aria-label="Close modal"
           >
-            <FaTimes className="text-xl" />
+            <X className="text-xl" />
           </button>
 
           <div className="text-center mb-6">

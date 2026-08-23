@@ -1,38 +1,40 @@
 'use client';
 
 import Link from 'next/link';
-import { FaFacebook, FaWhatsapp, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChurch } from 'react-icons/fa';
-
+import Image from 'next/image';
+import { Phone, Mail, MapPin, Church } from 'lucide-react';
+import { Facebook, Whatsapp, Youtube } from './BrandIcons';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   // Ministries link removed from quickLinks
   const quickLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Sermons', href: '#sermons' },
-    { name: 'Events', href: '#events' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Sermons', href: '/#sermons' },
+    { name: 'Events', href: '/events' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Archives', href: '/archives' },
+    { name: 'Our Founder', href: '/founder' },
+    { name: 'Courses', href: '/courses' },
   ];
   
   const ministries = [
     { name: 'Sunday School', href: '/ministries/sunday-school' },
-    { name: 'Ruwadzano', href: '/ministries/ruwadzano' },
-    { name: 'BMCU', href: '/ministries/bmcu' },
-    { name: 'Church', href: '/ministries/church' },
-    { name: 'Leadership', href: '/ministries/leadership' },
+    { name: 'Neniwo Project', href: '/projects' },
+    { name: 'Donations', href: '/donations' },
   ];
   
   const contactInfo = [
-    { icon: <FaMapMarkerAlt />, text: '5WHM+93M, Harare, Zimbabwe' },
-    { icon: <FaPhone />, text: '+263 71 565 7*6*' },
-    { icon: <FaEnvelope />, text: 'bethesdaapostolicchurch@gmail.com' },
+    { icon: <MapPin />, text: '5WHM+93M, Harare, Zimbabwe' },
+    { icon: <Phone />, text: '+263 71 565 7*6*' },
+    { icon: <Mail />, text: 'bethesdaapostolicchurch@gmail.com' },
   ];
   
   const socialLinks = [
-    { icon: <FaFacebook />, href: 'https://www.facebook.com/share/g/1MUa4mMqrp/', label: 'Facebook' },
-    { icon: <FaWhatsapp />, href: 'https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T', label: 'WhatsApp' },
-    { icon: <FaYoutube />, href: 'https://www.youtube.com/', label: 'YouTube' },
+    { icon: <Facebook />, href: 'https://www.facebook.com/share/g/1MUa4mMqrp/', label: 'Facebook' },
+    { icon: <Whatsapp />, href: 'https://whatsapp.com/channel/0029VbAOqKW3wtbIHDTjK41T', label: 'WhatsApp' },
+    { icon: <Youtube />, href: 'https://www.youtube.com/@bethesdaapostolicchurch4090', label: 'YouTube' },
   ];
 
   return (
@@ -42,12 +44,16 @@ export default function Footer() {
           {/* About */}
           <div>
             <div className="flex items-center mb-4">
-              <img 
-                src="/logo.png" 
-                alt="Bethesda Apostolic Logo" 
-                className="h-10 w-auto mr-3" 
-              />
-              <span className="text-xl font-bold text-white">Bethesda <span className="text-blue-500">Apostolic Church</span></span>
+              <div className="relative w-10 h-10 flex-shrink-0 mr-3">
+                <Image
+                  src="/logo.png"
+                  alt="Bethesda Apostolic Church Logo"
+                  fill
+                  className="object-contain"
+                  sizes="40px"
+                />
+              </div>
+              <span className="text-xl font-bold text-white">Bethesda <span className="text-gold-500">Apostolic Church</span></span>
             </div>
             <p className="mb-4 text-gray-400">
               A vibrant community of believers dedicated to spreading the love of Christ through worship, teaching, and service.
@@ -104,7 +110,7 @@ export default function Footer() {
                     href={ministry.href} 
                     className="text-gray-400 hover:text-blue-400 transition-colors flex items-center"
                   >
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                    <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mr-2"></span>
                     {ministry.name}
                   </Link>
                 </li>
@@ -118,7 +124,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {contactInfo.map((info, index) => (
                 <li key={index} className="flex items-start group hover:text-white transition-colors">
-                  <span className="text-blue-500 mt-1 mr-3 transition-colors group-hover:text-blue-400">{info.icon}</span>
+                  <span className="text-gold-500 mt-1 mr-3 transition-colors group-hover:text-gold-400">{info.icon}</span>
                   <span className="text-gray-400 transition-colors group-hover:text-white">{info.text}</span>
                 </li>
               ))}
