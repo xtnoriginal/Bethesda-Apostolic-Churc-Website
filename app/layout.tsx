@@ -87,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-ZW" className={`${inter.variable} font-sans`}>
+    <html lang="en-ZW" suppressHydrationWarning className={`${inter.variable} font-sans`}>
       <body className="min-h-screen bg-white text-gray-900 antialiased">
         <JsonLd data={churchGraph()} />
         <Providers>

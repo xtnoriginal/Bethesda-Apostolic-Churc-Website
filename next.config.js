@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-
   images: {
+    unoptimized: process.env.NODE_ENV === 'development',
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
@@ -12,15 +12,7 @@ const nextConfig = {
       },
     ],
   },
-
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'mdx'],
-
-  // Deliberately no `output: 'standalone'`. Vercel runs its own output
-  // tracing and reads .next/next-server.js.nft.json; standalone writes its
-  // traces under .next/standalone and never emits that file, so the deploy
-  // dies with ENOENT on it. It also breaks `next start` locally. Set it only
-  // for a self-hosted container build.
-
   serverExternalPackages: ['sharp', 'onnxruntime-node'],
   productionBrowserSourceMaps: process.env.NODE_ENV === 'development',
 };
