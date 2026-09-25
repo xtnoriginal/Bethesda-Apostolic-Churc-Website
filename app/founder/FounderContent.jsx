@@ -371,7 +371,7 @@ function Paragraphs({ items }) {
 
 const tabs = [
   { id: 'calling', label: 'The Calling' },
-  { id: 'statement-of-faith', label: 'Statement of Faith' },
+  { id: 'statement-of-faith', label: 'Statement of Faith: The 14 Visions' },
   { id: 'journeys', label: 'Missionary Journeys' },
 ];
 
