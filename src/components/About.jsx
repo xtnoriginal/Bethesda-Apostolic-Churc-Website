@@ -155,7 +155,8 @@ export default function About() {
                 {
                   icon: Cross,
                   title: 'Our Beliefs',
-                  description: 'We believe in the Bible as the inspired Word of God and the foundation of our faith.'
+                  description: 'We believe in the Bible as the inspired Word of God and the foundation of our faith.',
+                  link: { href: '/founder#statement-of-faith', label: 'Read our Statement of Faith' }
                 },
                 {
                   icon: Eye,
@@ -175,6 +176,11 @@ export default function About() {
                   <div>
                     <h4 className="font-semibold text-gray-900">{item.title}</h4>
                     <p className="text-gray-600">{item.description}</p>
+                    {item.link && (
+                      <Link href={item.link.href} className="inline-block mt-1 text-sm font-semibold text-blue-600 hover:text-blue-800">
+                        {item.link.label} &rarr;
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
@@ -182,7 +188,7 @@ export default function About() {
             
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                href="/about"
+                href="/founder#statement-of-faith"
                 className="btn btn-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700"
               >
                 Our Beliefs

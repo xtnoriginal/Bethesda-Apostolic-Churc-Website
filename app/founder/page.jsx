@@ -7,7 +7,7 @@ import { pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'Our Founder',
   description:
-    "Arch Bishop Loveless Manhango — founder of Bethesda Apostolic Church. The 1952 calling, fourteen visions, and evangelism journeys.",
+    "Arch Bishop Loveless Manhango — founder of Bethesda Apostolic Church. The 1952 calling, the fourteen visions that form our Statement of Faith, and his missionary journeys.",
   path: '/founder',
 });
 

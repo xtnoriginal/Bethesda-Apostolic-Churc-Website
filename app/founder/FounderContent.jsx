@@ -371,7 +371,7 @@ function Paragraphs({ items }) {
 
 const tabs = [
   { id: 'calling', label: 'The Calling' },
-  { id: 'visions', label: 'The 14 Visions' },
+  { id: 'statement-of-faith', label: 'Statement of Faith' },
   { id: 'journeys', label: 'Missionary Journeys' },
 ];
 
@@ -398,7 +398,10 @@ export default function FounderPage() {
   useEffect(() => {
     const syncFromHash = () => {
       const hash = window.location.hash.slice(1);
-      if (tabs.some((t) => t.id === hash)) setActiveTab(hash);
+      if (!tabs.some((t) => t.id === hash)) return;
+      setActiveTab(hash);
+      const section = tabBarRef.current?.parentElement;
+      if (section) window.scrollTo({ top: section.offsetTop - 56 });
     };
     syncFromHash();
     window.addEventListener('hashchange', syncFromHash);
@@ -538,20 +541,24 @@ export default function FounderPage() {
             a while, he heard the same voice saying, "Look." He then saw the following visions,
             something akin to watching a television.
           </p>
-          <NextTabButton tabId="visions" onSelect={selectTab} />
+          <NextTabButton tabId="statement-of-faith" onSelect={selectTab} />
         </div>
       </section>
       )}
 
-      {/* 14 Visions */}
-      {activeTab === 'visions' && (
-      <section id="panel-visions" role="tabpanel" aria-labelledby="tab-visions" className="section bg-gray-50">
+      {/* Statement of Faith — the 14 Visions */}
+      {activeTab === 'statement-of-faith' && (
+      <section id="panel-statement-of-faith" role="tabpanel" aria-labelledby="tab-statement-of-faith" className="section bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="section-title">
+            <div className="w-fit mx-auto px-3 py-1 mb-3 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full">
+              Our Statement of Faith
+            </div>
             <h2>The 14 Visions</h2>
             <p className="max-w-2xl mx-auto text-gray-600 mt-4">
-              Across two nights, Arch Bishop Loveless Manhango saw fourteen visions. His account
-              of each is below — open any vision to read it in full.
+              Across two nights in September 1952, Arch Bishop Loveless Manhango saw fourteen
+              visions. Together they form the Statement of Faith of Bethesda Apostolic Church.
+              His account of each is below — open any vision to read it in full.
             </p>
           </div>
           <div className="max-w-3xl mx-auto space-y-8">
