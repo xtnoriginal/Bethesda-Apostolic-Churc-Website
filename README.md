@@ -5,12 +5,26 @@ events, ministries, the Neniwo building project, and the BACCET education trust.
 
 ## Getting Started
 
+Requires **Node.js 22.x** (see `engines` in `package.json`).
+
 ```bash
-npm install
+npm install                # also runs `prisma generate`
+cp .env.example .env       # then fill in the values — see Environment
+npm run db:migrate         # create the local database
+npm run db:seed            # add sample courses and archive items
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+### Creating an admin
+
+The seed does not create any users. To get an admin account:
+
+1. Register at [http://localhost:3000/signup](http://localhost:3000/signup).
+2. Run `npm run db:studio`, open the `User` table, and set `isAdmin` to `true`
+   for your account.
+3. Sign out and back in to reach `/admin`.
 
 ## Scripts
 
@@ -31,6 +45,9 @@ Copy `.env.example` to `.env` and fill in:
 - `DATABASE_URL` — Prisma datasource (SQLite by default)
 - `NEXTAUTH_SECRET` — NextAuth signing secret
 - `NEXTAUTH_URL` — site origin, e.g. `http://localhost:3000`
+- `SITE_URL` — production origin, e.g. `https://example.org`. Canonical URLs,
+  Open Graph tags, `sitemap.xml` and `robots.txt` are built from it, so it must
+  be set at **build** time.
 
 Prisma is configured in `prisma.config.ts`; the deprecated `prisma` key in
 `package.json` has been removed.
@@ -57,4 +74,4 @@ explicit `w-*` and `h-*` classes still override it.
 
 ## Tech
 
-Next.js 15 · React 18 · Tailwind CSS 3 · Prisma · NextAuth · Motion
+Next.js 16 · React 19 · Tailwind CSS 3 · Prisma · NextAuth · Motion
