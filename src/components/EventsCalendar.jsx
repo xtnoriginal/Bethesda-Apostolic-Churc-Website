@@ -23,22 +23,11 @@ const sameDay = (a, b) =>
   a.getMonth() === b.getMonth() &&
   a.getDate() === b.getDate();
 
-// Open on the month of the next upcoming event; if everything is in the
-// past, fall back to the most recent one so the calendar isn't empty.
-function initialMonth(events) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const dated = events
-    .filter((e) => e.startDate)
-    .map((e) => ({ start: parseDate(e.startDate), end: parseDate(e.endDate || e.startDate) }))
-    .sort((a, b) => a.start - b.start);
-  const target =
-    dated.find((e) => e.end >= today)?.start || dated.at(-1)?.start || today;
-  return new Date(target.getFullYear(), target.getMonth(), 1);
-}
-
 export default function EventsCalendar({ events, onSelectEvent }) {
-  const [month, setMonth] = useState(() => initialMonth(events));
+  const [month, setMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
 
   const parsed = useMemo(
     () =>
