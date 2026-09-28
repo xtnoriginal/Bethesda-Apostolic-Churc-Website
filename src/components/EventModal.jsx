@@ -3,7 +3,8 @@
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { X, Calendar, MapPin } from 'lucide-react';
+import { X, Calendar, CalendarPlus, MapPin } from 'lucide-react';
+import { downloadCalendar, googleCalendarUrl } from '@/lib/ical';
 // The duration for each image in the carousel in milliseconds
 const CAROUSEL_INTERVAL = 7000;
 
@@ -93,6 +94,30 @@ export default function EventModal({ event, onClose }) {
             </div>
             
             <p className="text-gray-700 leading-relaxed">{event.description}</p>
+
+            {event.startDate && (
+              <div className="flex flex-wrap gap-3 mt-6">
+                <button
+                  onClick={() =>
+                    downloadCalendar([event], `${event.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.ics`, {
+                      url: `${window.location.origin}/events`,
+                    })
+                  }
+                  className="inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  <CalendarPlus className="w-4 h-4" aria-hidden="true" />
+                  Add to Calendar (.ics)
+                </button>
+                <a
+                  href={googleCalendarUrl(event)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-blue-200 text-blue-600 hover:bg-blue-50 px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  Google Calendar
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
