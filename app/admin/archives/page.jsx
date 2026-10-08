@@ -53,6 +53,7 @@ function ArchivesListContent() {
                 <div className="font-semibold text-gray-900">{item.title}</div>
                 <div className="text-sm text-gray-500">
                   {item.type} &middot; {item.slug} &middot; {item.date}
+                  {item.videoUrl && <span className="ml-2 text-red-600 font-medium">&middot; Video</span>}
                 </div>
               </div>
               <div className="flex items-center gap-4">

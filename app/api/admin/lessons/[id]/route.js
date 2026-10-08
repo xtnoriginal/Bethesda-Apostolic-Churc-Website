@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/requireAdmin';
 import { serializeLesson } from '@/lib/serialize';
+import { HOSTED_VIDEO_ERROR, isHostedVideoUrl } from '@/lib/storage';
 
 export async function PATCH(request, { params }) {
   const session = await requireAdmin();
@@ -11,7 +12,11 @@ export async function PATCH(request, { params }) {
 
   const { id } = await params;
   const body = await request.json();
-  const { lessonKey, title, type, duration, body: lessonBody, audioUrl, isDraft, isComingSoon, linkHref, linkLabel } = body || {};
+  const { lessonKey, title, type, duration, body: lessonBody, audioUrl, videoUrl, isDraft, isComingSoon, linkHref, linkLabel } = body || {};
+
+  if (videoUrl && !isHostedVideoUrl(videoUrl)) {
+    return NextResponse.json({ error: HOSTED_VIDEO_ERROR }, { status: 400 });
+  }
 
   const lesson = await prisma.lesson.update({
     where: { id },
@@ -22,6 +27,7 @@ export async function PATCH(request, { params }) {
       ...(duration !== undefined && { duration }),
       ...(lessonBody !== undefined && { body: lessonBody ? JSON.stringify(lessonBody) : null }),
       ...(audioUrl !== undefined && { audioUrl: audioUrl || null }),
+      ...(videoUrl !== undefined && { videoUrl: videoUrl || null }),
       ...(isDraft !== undefined && { isDraft: !!isDraft }),
       ...(isComingSoon !== undefined && { isComingSoon: !!isComingSoon }),
       ...(linkHref !== undefined && { linkHref: linkHref || null }),

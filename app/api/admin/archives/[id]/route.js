@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/requireAdmin';
 import { serializeArchiveItem } from '@/lib/serialize';
+import { HOSTED_VIDEO_ERROR, isHostedVideoUrl } from '@/lib/storage';
 
 export async function PATCH(request, { params }) {
   const session = await requireAdmin();
@@ -11,7 +12,12 @@ export async function PATCH(request, { params }) {
 
   const { id } = await params;
   const body = await request.json();
-  const { slug, title, type, date, image, description, body: itemBody, isDraft, isDownloadPending } = body || {};
+  const { slug, title, type, date, image, description, body: itemBody, videoUrl, isDraft, isDownloadPending } = body || {};
+
+  // An empty string removes the video; undefined leaves it untouched.
+  if (videoUrl && !isHostedVideoUrl(videoUrl)) {
+    return NextResponse.json({ error: HOSTED_VIDEO_ERROR }, { status: 400 });
+  }
 
   const item = await prisma.archiveItem.update({
     where: { id },
@@ -23,6 +29,7 @@ export async function PATCH(request, { params }) {
       ...(image !== undefined && { image }),
       ...(description !== undefined && { description }),
       ...(itemBody !== undefined && { body: itemBody ? JSON.stringify(itemBody) : null }),
+      ...(videoUrl !== undefined && { videoUrl: videoUrl ? videoUrl.trim() : null }),
       ...(isDraft !== undefined && { isDraft: !!isDraft }),
       ...(isDownloadPending !== undefined && { isDownloadPending: !!isDownloadPending }),
     },

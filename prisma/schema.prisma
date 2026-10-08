@@ -50,6 +50,7 @@ model Lesson {
   order        Int      @default(0)
   body         String?
   audioUrl     String?
+  videoUrl     String?
   isDraft      Boolean  @default(false)
   isComingSoon Boolean  @default(false)
   linkHref     String?
@@ -68,8 +69,23 @@ model ArchiveItem {
   image             String
   description       String
   body              String?
+  videoUrl          String?
   isDraft           Boolean  @default(false)
   isDownloadPending Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+}
+
+// Homepage "Recent Sermons": YouTube links managed in Admin -> Sermons.
+model Sermon {
+  id          String   @id @default(cuid())
+  title       String
+  preacher    String
+  date        DateTime
+  duration    String?
+  description String
+  youtubeUrl  String
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/requireAdmin';
 import { serializeArchiveItem } from '@/lib/serialize';
+import { HOSTED_VIDEO_ERROR, isHostedVideoUrl } from '@/lib/storage';
 
 export async function GET() {
   const items = await prisma.archiveItem.findMany({
@@ -17,9 +18,13 @@ export async function POST(request) {
   }
 
   const body = await request.json();
-  const { slug, title, type, date, image, description, body: itemBody, isDraft, isDownloadPending } = body || {};
+  const { slug, title, type, date, image, description, body: itemBody, videoUrl, isDraft, isDownloadPending } = body || {};
   if (!slug || !title || !type || !date || !image || !description) {
     return NextResponse.json({ error: 'slug, title, type, date, image, and description are required.' }, { status: 400 });
+  }
+
+  if (videoUrl && !isHostedVideoUrl(videoUrl)) {
+    return NextResponse.json({ error: HOSTED_VIDEO_ERROR }, { status: 400 });
   }
 
   const existing = await prisma.archiveItem.findUnique({ where: { slug } });
@@ -36,6 +41,7 @@ export async function POST(request) {
       image,
       description,
       body: itemBody ? JSON.stringify(itemBody) : null,
+      videoUrl: videoUrl ? videoUrl.trim() : null,
       isDraft: !!isDraft,
       isDownloadPending: !!isDownloadPending,
     },

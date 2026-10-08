@@ -3,45 +3,27 @@
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import { Youtube } from './BrandIcons';
+import { youTubeEmbedUrl, youTubeThumbnailUrl } from '@/lib/youtube';
 
-const sermons = [
-  {
-    id: 1,
-    title: 'Murehwa-Mutoko Passover 2025 || Bishop N Manhango',
-    preacher: 'Bishop N Manhango',
-    date: 'July 27, 2025',
-    duration: '46:11',
-    image: '/images/1.jpg',
-    video: 'https://youtu.be/HPVrTZjYbPY?si=EyQLsJ9TiJTO41SP',
-    description: 'Murehwa-Mutoko Passover 2025'
-  },
-  {
-    id: 2,
-    title: 'Marondera Passover 2025 - Mai ArchBishop Manhango',
-    preacher: 'Mai ArchBishop Manhango',
-    date: 'June 11, 2023',
-    duration: '10:12',
-    image: '/images/2.jpg',
-    video: 'https://youtu.be/HPgtLSWVSnU?si=NJ49NDca3oRhhun7',
-    description: 'Marondera Passover 2025'
-  },
-  {
-    id: 3,
-    title: 'Zaka Jerera Passover 2025 - Mai ArchBishop Manhango Sermon',
-    preacher: 'Mai ArchBishop Manhango',
-    date: 'July 20, 2025',
-    duration: '10:52',
-    image: '/images/3.jpg',
-    video: 'https://youtu.be/mwRDA6jkILk?si=WzDzXfFfxjhldyG_',
-    description: 'Zaka Jerera Passover 2025'
-  },
-];
+const formatDate = (iso) =>
+  new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
 const youtubeChannelUrl = 'https://www.youtube.com/@bethesdaapostolicchurch4090';
 
 export default function Sermons() {
+  const [sermons, setSermons] = useState(null);
+  const [playingId, setPlayingId] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/sermons?limit=3')
+      .then((res) => (res.ok ? res.json() : { sermons: [] }))
+      .then((data) => setSermons(data.sermons || []))
+      .catch(() => setSermons([]));
+  }, []);
+
   return (
     <section id="sermons" className="section bg-gray-50">
       <div className="container mx-auto">
@@ -76,7 +58,18 @@ export default function Sermons() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sermons.map((sermon, index) => (
+          {sermons === null &&
+            [0, 1, 2].map((i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse">
+                <div className="aspect-video bg-gray-200" />
+                <div className="p-6 space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                  <div className="h-6 bg-gray-200 rounded" />
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                </div>
+              </div>
+            ))}
+          {sermons?.map((sermon, index) => (
             <motion.div
               key={sermon.id}
               className="bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-xl transition-shadow duration-300 hover:scale-[1.02] transition-transform"
@@ -85,39 +78,56 @@ export default function Sermons() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={sermon.video} target="_blank" rel="noopener noreferrer">
-                <div className="relative h-48 bg-gray-200 overflow-hidden">
+              {playingId === sermon.id ? (
+                <div className="relative aspect-video bg-black">
+                  <iframe
+                    src={`${youTubeEmbedUrl(sermon.youtubeUrl)}&autoplay=1`}
+                    title={sermon.title}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setPlayingId(sermon.id)}
+                  className="relative block w-full aspect-video bg-gray-200 overflow-hidden"
+                  aria-label={`Play sermon: ${sermon.title}`}
+                >
                   <Image
-                    src={sermon.image}
+                    src={sermon.image || youTubeThumbnailUrl(sermon.youtubeUrl)}
                     alt={sermon.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button
-                      className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors"
-                      aria-label={`Play sermon: ${sermon.title}`}
-                    >
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors">
                       <Youtube className="text-4xl" />
-                    </button>
+                    </span>
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/90 text-red-600 text-xs font-semibold px-2 py-1 rounded">
-                    {sermon.duration}
-                  </div>
-                </div>
-              </Link>
+                  {sermon.duration && (
+                    <div className="absolute top-4 right-4 bg-white/90 text-red-600 text-xs font-semibold px-2 py-1 rounded">
+                      {sermon.duration}
+                    </div>
+                  )}
+                </button>
+              )}
               
               <div className="p-6">
                 <div className="flex items-center text-sm text-gray-500 mb-3 space-x-4">
                   <div className="flex items-center">
                     <Calendar className="mr-1" />
-                    <span>{sermon.date}</span>
+                    <span>{formatDate(sermon.date)}</span>
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="mr-1" />
-                    <span>{sermon.duration}</span>
-                  </div>
+                  {sermon.duration && (
+                    <div className="flex items-center">
+                      <Clock className="mr-1" />
+                      <span>{sermon.duration}</span>
+                    </div>
+                  )}
                 </div>
                 
                 <h3 className="text-xl font-bold mb-2 line-clamp-2">{sermon.title}</h3>
@@ -125,14 +135,13 @@ export default function Sermons() {
                 <div className="text-sm font-medium text-gray-900 mb-4">Preacher: {sermon.preacher}</div>
                 
                 <div className="flex justify-center items-center pt-4 border-t border-gray-100">
-                  <Link
-                    href={sermon.video}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => setPlayingId(sermon.id)}
                     className="text-sm font-medium text-red-600 hover:text-red-700 flex items-center hover:scale-105 transition-transform duration-200"
                   >
                     <Youtube className="mr-1 text-base" /> Watch Sermon
-                  </Link>
+                  </button>
                 </div>
               </div>
             </motion.div>

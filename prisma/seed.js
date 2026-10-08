@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   const { courses } = await import('../src/data/courses.js');
   const { archiveItems } = await import('../src/data/archives.js');
+  const { sermons } = await import('../src/data/sermons.js');
 
   for (const course of courses) {
     const createdCourse = await prisma.course.upsert({
@@ -76,7 +77,17 @@ async function main() {
     });
   }
 
-  console.log(`Seeded ${courses.length} courses and ${archiveItems.length} archive items.`);
+  // Sermons have no natural unique key, so only seed into an empty table;
+  // re-running the seed must not duplicate or overwrite admin edits.
+  if ((await prisma.sermon.count()) === 0) {
+    for (const sermon of sermons) {
+      await prisma.sermon.create({ data: { ...sermon, date: new Date(sermon.date) } });
+    }
+  }
+
+  console.log(
+    `Seeded ${courses.length} courses, ${archiveItems.length} archive items and ${sermons.length} sermons.`
+  );
 }
 
 main()
