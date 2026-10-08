@@ -10,6 +10,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        // YouTube thumbnails for sermons without their own image.
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+      },
     ],
   },
 

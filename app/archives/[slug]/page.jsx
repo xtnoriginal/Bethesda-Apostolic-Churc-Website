@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
 import PlaceholderNote from '@/components/PlaceholderNote';
+import VideoPlayer from '@/components/VideoPlayer';
 import { ArrowLeft, BookOpen, FileText, CirclePlay } from 'lucide-react';
 
 const typeIcons = {
@@ -48,15 +49,19 @@ export default function ArchiveDetailPage({ params }) {
             Back to Archives
           </Link>
 
-          <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl mb-8">
-            <Image
-              src={item.image}
-              alt={item.title}
-              fill
-              className="object-cover"
-              sizes="(min-width: 768px) 48rem, 100vw"
-            />
-          </div>
+          {item.videoUrl ? (
+            <VideoPlayer src={item.videoUrl} poster={item.image} title={item.title} className="mb-8" />
+          ) : (
+            <div className="relative w-full h-64 rounded-2xl overflow-hidden shadow-xl mb-8">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 48rem, 100vw"
+              />
+            </div>
+          )}
 
           <div className="flex items-center gap-2 text-blue-700 text-sm font-medium mb-3">
             <Icon /> <span>{item.type}</span>

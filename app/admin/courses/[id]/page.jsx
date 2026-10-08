@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
 import AdminGuard from '../../AdminGuard';
 import UploadField from '../../UploadField';
+import VideoUploadField from '../../VideoUploadField';
 import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 
 function LessonForm({ courseId, lesson, onSaved, onCancel }) {
@@ -14,6 +15,8 @@ function LessonForm({ courseId, lesson, onSaved, onCancel }) {
   const [duration, setDuration] = useState(lesson?.duration || '');
   const [bodyText, setBodyText] = useState((lesson?.body || []).join('\n'));
   const [audioUrl, setAudioUrl] = useState(lesson?.audioUrl || '');
+  const [videoUrl, setVideoUrl] = useState(lesson?.videoUrl || '');
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const [isDraft, setIsDraft] = useState(!!lesson?.isDraft);
   const [isComingSoon, setIsComingSoon] = useState(!!lesson?.isComingSoon);
   const [linkHref, setLinkHref] = useState(lesson?.linkHref || '');
@@ -38,8 +41,9 @@ function LessonForm({ courseId, lesson, onSaved, onCancel }) {
       duration,
       body,
       audioUrl: type === 'audio' ? audioUrl : undefined,
+      videoUrl: type === 'video' ? videoUrl : '',
       isDraft,
-      isComingSoon: type === 'video' ? isComingSoon : false,
+      isComingSoon: type === 'video' && !videoUrl ? isComingSoon : false,
       linkHref: linkHref || undefined,
       linkLabel: linkLabel || undefined,
     };
@@ -97,6 +101,15 @@ function LessonForm({ courseId, lesson, onSaved, onCancel }) {
       {type === 'audio' && <UploadField label="Audio File" value={audioUrl} onChange={setAudioUrl} accept="audio/*" />}
 
       {type === 'video' && (
+        <VideoUploadField
+          label="Video File"
+          value={videoUrl}
+          onChange={setVideoUrl}
+          onUploadingChange={setIsVideoUploading}
+        />
+      )}
+
+      {type === 'video' && !videoUrl && (
         <label className="flex items-center gap-2 text-sm text-gray-700">
           <input type="checkbox" checked={isComingSoon} onChange={(e) => setIsComingSoon(e.target.checked)} />
           Show as &quot;coming soon&quot; (no video file yet)
@@ -120,8 +133,8 @@ function LessonForm({ courseId, lesson, onSaved, onCancel }) {
       </label>
 
       <div className="flex items-center gap-3 pt-2">
-        <button type="submit" disabled={isSubmitting} className="btn btn-primary text-sm disabled:opacity-60">
-          {isSubmitting ? 'Saving...' : 'Save Lesson'}
+        <button type="submit" disabled={isSubmitting || isVideoUploading} className="btn btn-primary text-sm disabled:opacity-60">
+          {isSubmitting ? 'Saving...' : isVideoUploading ? 'Waiting for video upload...' : 'Save Lesson'}
         </button>
         <button type="button" onClick={onCancel} className="text-gray-600 text-sm hover:text-gray-900">
           Cancel

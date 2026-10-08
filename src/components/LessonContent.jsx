@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import PlaceholderNote from './PlaceholderNote';
+import VideoPlayer from './VideoPlayer';
 import { FileText, Headphones, CirclePlay, Video, ArrowRight } from 'lucide-react';
 
 export const lessonTypeMeta = {
@@ -23,7 +24,11 @@ export default function LessonContent({ lesson }) {
         </audio>
       )}
 
-      {lesson.type === 'video' && lesson.isComingSoon && (
+      {lesson.type === 'video' && lesson.videoUrl && (
+        <VideoPlayer src={lesson.videoUrl} title={lesson.title} className="mb-6" />
+      )}
+
+      {lesson.type === 'video' && !lesson.videoUrl && lesson.isComingSoon && (
         <div className="mb-6 rounded-xl bg-gray-100 border border-dashed border-gray-300 p-12 text-center">
           <CirclePlay className="mx-auto text-5xl text-gray-400 mb-3" />
           <p className="text-gray-500 font-medium">Video coming soon</p>

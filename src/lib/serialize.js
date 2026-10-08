@@ -8,6 +8,7 @@ export function serializeLesson(lesson) {
     order: lesson.order,
     body: lesson.body ? JSON.parse(lesson.body) : null,
     audioUrl: lesson.audioUrl || undefined,
+    videoUrl: lesson.videoUrl || undefined,
     isDraft: lesson.isDraft,
     isComingSoon: lesson.isComingSoon,
     linkHref: lesson.linkHref || undefined,
@@ -40,7 +41,21 @@ export function serializeArchiveItem(item) {
     image: item.image,
     description: item.description,
     body: item.body ? JSON.parse(item.body) : null,
+    videoUrl: item.videoUrl || null,
     isDraft: item.isDraft,
     isDownloadPending: item.isDownloadPending,
+  };
+}
+
+export function serializeSermon(sermon) {
+  return {
+    id: sermon.id,
+    title: sermon.title,
+    preacher: sermon.preacher,
+    date: sermon.date instanceof Date ? sermon.date.toISOString().slice(0, 10) : sermon.date,
+    duration: sermon.duration || '',
+    description: sermon.description,
+    youtubeUrl: sermon.youtubeUrl,
+    image: sermon.image || '',
   };
 }

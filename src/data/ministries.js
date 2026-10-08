@@ -1,3 +1,5 @@
+import { bcuContent } from './bcu';
+
 export const ministries = [
   {
     slug: 'sunday-school',
@@ -23,9 +25,10 @@ export const ministries = [
   {
     slug: 'bcu',
     name: 'BCU',
-    tagline: 'One of our church wings.',
-    image: '/images/9.jpg',
-    isDraft: true,
+    fullName: 'Boys Christian Union',
+    tagline: 'The youth wing for young men, raised as an army of the Word of God.',
+    image: '/images/bcu/gathering.jpg',
+    content: bcuContent,
   },
   {
     slug: 'gcu',

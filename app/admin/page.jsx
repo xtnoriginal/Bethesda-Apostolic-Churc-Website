@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import AdminGuard from './AdminGuard';
-import { ArrowLeft, BookOpen, GraduationCap } from 'lucide-react';
+import { ArrowLeft, BookOpen, GraduationCap, CirclePlay } from 'lucide-react';
 
 export default function AdminPage() {
   return (
@@ -15,7 +15,7 @@ export default function AdminPage() {
           </Link>
 
           <h1 className="text-3xl font-bold mb-2">Admin Portal</h1>
-          <p className="text-gray-600 mb-10">Manage courses, lessons, and archive content.</p>
+          <p className="text-gray-600 mb-10">Manage courses, lessons, archive content, and homepage sermons.</p>
 
           <div className="grid sm:grid-cols-2 gap-6">
             <Link href="/admin/courses" className="card p-8 block hover:shadow-lg transition-shadow">
@@ -26,7 +26,12 @@ export default function AdminPage() {
             <Link href="/admin/archives" className="card p-8 block hover:shadow-lg transition-shadow">
               <BookOpen className="text-3xl text-blue-600 mb-4" />
               <h2 className="text-xl font-bold mb-1">Archives</h2>
-              <p className="text-gray-600 text-sm">Create and edit sermons, articles, and PDFs.</p>
+              <p className="text-gray-600 text-sm">Create and edit sermons, articles, and PDFs, with uploaded videos.</p>
+            </Link>
+            <Link href="/admin/sermons" className="card p-8 block hover:shadow-lg transition-shadow">
+              <CirclePlay className="text-3xl text-blue-600 mb-4" />
+              <h2 className="text-xl font-bold mb-1">Sermons</h2>
+              <p className="text-gray-600 text-sm">Add YouTube sermons to the homepage &ldquo;Recent Sermons&rdquo; section.</p>
             </Link>
           </div>
         </div>

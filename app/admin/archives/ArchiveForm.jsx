@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import UploadField from '../UploadField';
+import VideoUploadField from '../VideoUploadField';
 
 function slugify(text) {
   return text
@@ -20,6 +21,8 @@ export default function ArchiveForm({ initial, onSubmit, submitLabel }) {
   const [image, setImage] = useState(initial?.image || '');
   const [description, setDescription] = useState(initial?.description || '');
   const [bodyText, setBodyText] = useState((initial?.body || []).join('\n'));
+  const [videoUrl, setVideoUrl] = useState(initial?.videoUrl || '');
+  const [isVideoUploading, setIsVideoUploading] = useState(false);
   const [isDraft, setIsDraft] = useState(!!initial?.isDraft);
   const [isDownloadPending, setIsDownloadPending] = useState(!!initial?.isDownloadPending);
   const [error, setError] = useState('');
@@ -48,6 +51,7 @@ export default function ArchiveForm({ initial, onSubmit, submitLabel }) {
         image,
         description,
         body,
+        videoUrl,
         isDraft,
         isDownloadPending,
       });
@@ -95,6 +99,13 @@ export default function ArchiveForm({ initial, onSubmit, submitLabel }) {
         </div>
       </div>
       <UploadField label="Image" value={image} onChange={setImage} accept="image/*" />
+      <VideoUploadField
+        label="Video (optional)"
+        value={videoUrl}
+        onChange={setVideoUrl}
+        poster={image}
+        onUploadingChange={setIsVideoUploading}
+      />
       <div>
         <label className="form-label">Short Description</label>
         <textarea className="form-input" required rows="2" value={description} onChange={(e) => setDescription(e.target.value)} />
@@ -115,8 +126,8 @@ export default function ArchiveForm({ initial, onSubmit, submitLabel }) {
         Mark as draft (shows a placeholder note)
       </label>
 
-      <button type="submit" disabled={isSubmitting} className="btn btn-primary disabled:opacity-60">
-        {isSubmitting ? 'Saving...' : submitLabel}
+      <button type="submit" disabled={isSubmitting || isVideoUploading} className="btn btn-primary disabled:opacity-60">
+        {isSubmitting ? 'Saving...' : isVideoUploading ? 'Waiting for video upload...' : submitLabel}
       </button>
     </form>
   );

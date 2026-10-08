@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/requireAdmin';
 import { serializeLesson } from '@/lib/serialize';
+import { HOSTED_VIDEO_ERROR, isHostedVideoUrl } from '@/lib/storage';
 
 export async function POST(request) {
   const session = await requireAdmin();
@@ -10,10 +11,13 @@ export async function POST(request) {
   }
 
   const body = await request.json();
-  const { courseId, lessonKey, title, type, duration, body: lessonBody, audioUrl, isDraft, isComingSoon, linkHref, linkLabel } = body || {};
+  const { courseId, lessonKey, title, type, duration, body: lessonBody, audioUrl, videoUrl, isDraft, isComingSoon, linkHref, linkLabel } = body || {};
 
   if (!courseId || !lessonKey || !title || !type) {
     return NextResponse.json({ error: 'courseId, lessonKey, title, and type are required.' }, { status: 400 });
+  }
+  if (videoUrl && !isHostedVideoUrl(videoUrl)) {
+    return NextResponse.json({ error: HOSTED_VIDEO_ERROR }, { status: 400 });
   }
 
   const existingCount = await prisma.lesson.count({ where: { courseId } });
@@ -28,6 +32,7 @@ export async function POST(request) {
       order: existingCount,
       body: lessonBody ? JSON.stringify(lessonBody) : null,
       audioUrl: audioUrl || null,
+      videoUrl: videoUrl || null,
       isDraft: !!isDraft,
       isComingSoon: !!isComingSoon,
       linkHref: linkHref || null,
